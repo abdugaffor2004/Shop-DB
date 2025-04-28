@@ -15,21 +15,233 @@ datasource db {
 
 
 // Это уже описание самой БД. Какие таблицы есть с какими атрибутами итд
-model Post {
-  id        String     @default(cuid()) @id
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  String?
+
+// Факт продажи
+model Sell { 
+  id                      String     @default(cuid())   @id
+  totalPrice              Float      // Итоговая сумма
+  soldCount               Int        // Количество проданного
+  discountAmount          Float      // Cумма скидки
+  costPrice               Float      // Себестоимость
+  taxAmount               Float      // Сумма налога
+
+  soldDateId              String?    
+  soldDate                SoldDate?   @relation(fields: [soldDateId], references: [id]) // Дата продажи
+
+  shopId              String?    
+  shop                Shop?   @relation(fields: [shopId], references: [id]) // Дата продажи
 }
 
-model User {
-  id            String       @default(cuid()) @id
-  name          String?
-  email         String?   @unique
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  posts         Post[]
-  @@map(name: "users")
+// День
+model SoldDate {
+  id                      String       @default(cuid())   @id
+  date                    String
+  day                     Int
+  month                   Int
+  year                    Int
+  quarter                 Int
+  week                    Int
+  dayOfWeek               String
+  isHoliday               Boolean       @default(false)
+  holidayName             String
+
+  sells                   Sell[]
 }
+
+// Товар
+model Product {
+  id                      String        @default(cuid())   @id
+  name                    String        // название
+  description             String?       // описание
+  price                   Float         // стоимомть
+  costPrice               Float         // себестоимоть
+  brand                   String?       // брэнд
+  weight                  Float?        // масса
+  size                    String?       // Размер
+  color                   String?       // Цвет
+  quantityInWarehouse     Int           // Количество на складе
+  isActive                Boolean       @default(false) // Активный
+  createdAt               String        // Дата создания
+
+  categoryId              String?
+  category                Category?      @relation(fields: [categoryId], references: [id])
+  feedBacks                  FeedBack[]
+  refundReasons           RefundReason[]
+  warehouses              Warehouse[]
+  shops                   Shop[]
+}
+
+// Категория
+model Category {
+  id                      String        @default(cuid())   @id
+  name                    String
+  description             String?
+  
+  products                Product[]
+}
+
+model RefundReason {
+  id                      String        @default(cuid())   @id
+  reasonTitle             String
+
+  productId               String?
+  product                 Product?       @relation(fields: [productId], references: [id])
+}
+
+model Client {
+  id                      String        @default(cuid())   @id
+  firstName               String
+  lastName                String
+  email                   String?
+  phoneNumber             String?
+  address                 String?
+  city                    String?
+  region                  String?
+  country                 String?
+  index                   String?
+  registratedAt           String
+  lastBuyDate             String?
+
+  feedBacks               FeedBack[]
+  shops                   Shop[]
+}
+
+// Отзыв
+model FeedBack {
+  id                      String        @default(cuid())   @id
+  Rating                  Int?
+  comments                String
+  createdAt               String
+
+  productId               String?
+  clientId                String?
+  product                 Product?      @relation(fields: [productId], references: [id])
+  client                  Client?        @relation(fields: [clientId], references: [id])
+}
+
+// Поставщик
+model Supplier {
+  id                      String        @default(cuid())   @id
+  name                    String
+  phoneNumber             String?
+  email                   String?
+  address                 String?
+  city                    String?
+  region                  String?
+  country                 String?
+
+  shops                   Shop[]
+}
+
+model Employee {
+  id                      String        @default(cuid())   @id
+  firstName               String
+  lastName                String
+  position                String?
+  acceptDate              String?
+  terminationDate         String?
+  email                   String?
+  phoneNumber             String?
+
+  
+  shopId               String?
+  shop                 Shop?             @relation(fields: [shopId], references: [id])
+}
+
+// Акция
+model Stock {
+  id                      String        @default(cuid())   @id
+  title                   String
+  description             String?
+  startDate               String?
+  endDate                 String?
+  discountPercentage      Float?
+  fixedDiscount           Float?
+
+  shops                   Shop[]
+}
+
+// Способ доставки
+model DeliveryMethod {
+  id                      String        @default(cuid())   @id
+  title                   String
+  price                   Float?
+  deliveryTime            Int?
+
+  shops                   Shop[]
+}
+
+// Способ оплаты
+model PaymentMethod {
+  id                      String        @default(cuid())   @id
+  title                   String
+  desription              String?
+
+  shops                   Shop[]
+}
+
+// География
+model Location {
+  id                      String        @default(cuid())   @id
+  region                  String
+  climate                 String?
+  populationCount         Int?
+
+  shops                   Shop[]
+}
+
+// Склад
+model Warehouse {
+  id                      String        @default(cuid())   @id
+  count                   Int
+  lastDepositDate         String? // Дата последнего пополнения
+
+ 
+  products                Product[]
+  shops                   Shop[]
+}
+
+
+
+model Shop {
+  id                      String        @default(cuid())   @id
+ 
+  name                    String
+  address                 String?
+  city                    String?
+  region                  String?
+  launchedDate            String?
+  closedDate              String?
+  areaValue               Float? // Площадь
+
+  locationId              String?
+
+  sells                   Sell[]
+  employees               Employee[]
+  stocks                  Stock[] 
+  deliveryMethods         DeliveryMethod[]
+  paymentMeyhods          PaymentMethod[] 
+  suppliers               Supplier[]
+  location                Location?     @relation(fields: [locationId], references: [id])
+  products                Product[]
+  clients                 Client[]
+  warehouses              Warehouse[]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
