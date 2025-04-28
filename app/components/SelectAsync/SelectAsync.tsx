@@ -1,9 +1,10 @@
 'use client';
-import { Handbook } from '@/types/handbook';
+
 import { CheckIcon, Combobox, Loader, ScrollArea, TextInput, useCombobox } from '@mantine/core';
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
 import React, { FC, useState } from 'react';
 import classes from './SelectAsync.module.css';
+import { Handbook } from '@/app/types/Handbook';
 
 interface SelectAsyncProps {
   placeholder?: string;
