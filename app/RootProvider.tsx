@@ -34,7 +34,7 @@ export const RootProvider = ({ children }) => {
             },
             Combobox: {
               styles: () => ({
-                dropdown: { backgroundColor: 'white', color: '#c9c9c9' },
+                dropdown: { backgroundColor: 'white', color: '#000' },
               }),
             },
           },

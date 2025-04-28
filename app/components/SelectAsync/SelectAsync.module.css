@@ -1,6 +1,6 @@
 .selectOption {
   &:active,
   &:hover {
-    background-color: #242424;
+    background-color: #4169ee16;
   }
 }

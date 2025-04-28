@@ -38,14 +38,13 @@ const ShopsTable: FC<ShopsTableProps> = ({ data, withDelete, deleteRows }) => {
 
   return (
     <Table
-      horizontalSpacing="50px"
-      verticalSpacing="14px"
+      horizontalSpacing="45px"
+      verticalSpacing="17px"
       highlightOnHover
       className=" mt-8 rounded-md"
-      highlightOnHoverColor="#7c68ee31"
-      bg="#24263a"
-      withColumnBorders
-      borderColor="white"
+      highlightOnHoverColor="#4169ee16"
+      bg="white"
+      withRowBorders
     >
       <Table.Thead bg="#4169e2">
         <Table.Tr>
@@ -56,7 +55,7 @@ const ShopsTable: FC<ShopsTableProps> = ({ data, withDelete, deleteRows }) => {
           <Table.Th className="text-[16px] text-white ">Область</Table.Th>
           <Table.Th className="text-[16px] text-white ">Площадь</Table.Th>
           <Table.Th px={10} className="w-[40px]">
-            <ActionIcon onClick={() => setIsEditable()} variant="subtle" color="#7c68ee">
+            <ActionIcon onClick={() => setIsEditable()} variant="subtle" color="white">
               {!isEditable ? <IconEdit /> : <IconChecks />}
             </ActionIcon>
           </Table.Th>

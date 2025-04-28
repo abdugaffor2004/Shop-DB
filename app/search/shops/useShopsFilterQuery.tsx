@@ -16,10 +16,10 @@ export const useShopsFilterQuery = (searchParams?: ShopsFilterSearchparams) => {
     queryFn: async (): Promise<Shop[]> => {
       const response = await axios.get<unknown, AxiosResponse<Shop[]>>('/api/shops', {
         params: {
-          c: searchParams?.city,
-          ld: searchParams?.launchedDate,
-          cd: searchParams?.closedDate,
-          p: searchParams?.position,
+          c: searchParams?.city?.label,
+          ld: searchParams?.launchedDate?.label,
+          cd: searchParams?.closedDate?.label,
+          p: searchParams?.position?.label,
         },
       });
       return response.data;
@@ -28,7 +28,7 @@ export const useShopsFilterQuery = (searchParams?: ShopsFilterSearchparams) => {
 
   const cityOptions: Handbook[] =
     data
-      ?.map(shop => ({ value: shop.id, label: shop.name }))
+      ?.map(shop => ({ value: shop.id, label: shop.city }))
       .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
 
   const launchedDateOptions: Handbook[] =
