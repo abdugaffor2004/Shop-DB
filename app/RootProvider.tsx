@@ -19,8 +19,7 @@ export const RootProvider = ({ children }) => {
             TextInput: {
               styles: () => ({
                 input: {
-                  backgroundColor: '#2e2e2e',
-                  borderColor: '#484848',
+                  backgroundColor: 'white',
                   color: '#c9c9c9',
                 },
               }),
@@ -28,15 +27,14 @@ export const RootProvider = ({ children }) => {
             NumberInput: {
               styles: () => ({
                 input: {
-                  backgroundColor: '#2e2e2e',
-                  borderColor: '#484848',
+                  backgroundColor: 'white',
                   color: '#c9c9c9',
                 },
               }),
             },
             Combobox: {
               styles: () => ({
-                dropdown: { backgroundColor: '#2e2e2e', borderColor: '#484848', color: '#c9c9c9' },
+                dropdown: { backgroundColor: 'white', color: '#c9c9c9' },
               }),
             },
           },

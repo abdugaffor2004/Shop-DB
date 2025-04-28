@@ -1,0 +1,14 @@
+.paginationControls {
+  background-color: #2e2e2e;
+  border-color: #484848;
+  color: #c9c9c9;
+
+  &:active,
+  &:hover {
+    background-color: #4169e2;
+  }
+
+  &:where([data-active]) {
+    background-color: #4169e2;
+  }
+}

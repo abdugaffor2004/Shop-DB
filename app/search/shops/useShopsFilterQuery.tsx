@@ -1,0 +1,66 @@
+import { Handbook } from '@/app/types/Handbook';
+import { useQuery } from '@tanstack/react-query';
+import { Shop } from './types/Shop';
+import axios, { AxiosResponse } from 'axios';
+
+interface ShopsFilterSearchparams {
+  city: Handbook | null;
+  launchedDate: Handbook | null;
+  closedDate: Handbook | null;
+  position: Handbook | null;
+}
+
+export const useShopsFilterQuery = (searchParams?: ShopsFilterSearchparams) => {
+  const { data, ...rest } = useQuery({
+    queryKey: ['shops', searchParams],
+    queryFn: async (): Promise<Shop[]> => {
+      const response = await axios.get<unknown, AxiosResponse<Shop[]>>('/api/shops', {
+        params: {
+          c: searchParams?.city,
+          ld: searchParams?.launchedDate,
+          cd: searchParams?.closedDate,
+          p: searchParams?.position,
+        },
+      });
+      return response.data;
+    },
+  });
+
+  const cityOptions: Handbook[] =
+    data
+      ?.map(shop => ({ value: shop.id, label: shop.name }))
+      .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
+
+  const launchedDateOptions: Handbook[] =
+    data
+      ?.map(shop => ({
+        value: shop.id,
+        label: shop.launchedDate,
+      }))
+      .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
+
+  const closedDateOptions: Handbook[] =
+    data
+      ?.map(shop => ({
+        value: shop.id,
+        label: shop.closedDate,
+      }))
+      .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
+
+  const positionOptions: Handbook[] =
+    data
+      ?.map(shop => ({
+        value: shop.id,
+        label: 'erer',
+      }))
+      .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
+
+  const shopsFilterOptions = {
+    cityOptions,
+    launchedDateOptions,
+    closedDateOptions,
+    positionOptions,
+  };
+
+  return { data, filterOptions: shopsFilterOptions, ...rest };
+};

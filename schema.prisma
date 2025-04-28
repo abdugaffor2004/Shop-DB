@@ -205,7 +205,6 @@ model Warehouse {
 
 model Shop {
   id                      String        @default(cuid())   @id
- 
   name                    String
   address                 String?
   city                    String?
