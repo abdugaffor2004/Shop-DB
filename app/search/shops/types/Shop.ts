@@ -1,3 +1,5 @@
+import { Employee } from '../../employees/types/employee';
+
 export interface Shop {
   id: string;
   name: string;
@@ -7,4 +9,6 @@ export interface Shop {
   launchedDate: string;
   closedDate: string;
   areaValue: number;
+
+  employees: Employee[];
 }

@@ -45,6 +45,7 @@ export const GET = async (request: NextRequest) => {
       name: true,
       launchedDate: true,
       products: true,
+      employees: true,
     },
   });
 

@@ -49,11 +49,8 @@ export const useShopsFilterQuery = (searchParams?: ShopsFilterSearchparams) => {
 
   const positionOptions: Handbook[] =
     data
-      ?.map(shop => ({
-        value: shop.id,
-        label: 'erer',
-      }))
-      .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
+      ?.flatMap(shop => shop.employees)
+      .map(employee => ({ value: employee.id, label: employee.position })) ?? [];
 
   const shopsFilterOptions = {
     cityOptions,
