@@ -22,7 +22,7 @@ const ShopsTable: FC<ShopsTableProps> = ({ data, withDelete, deleteRows }) => {
     <Table.Tr key={item.id}>
       <Table.Td>{item.name}</Table.Td>
       <Table.Td>{item.launchedDate}</Table.Td>
-      <Table.Td>{item.closedDate}</Table.Td>
+      <Table.Td>{item.closedDate ?? '-'}</Table.Td>
       <Table.Td>{item.city}</Table.Td>
       <Table.Td>{item.region}</Table.Td>
       <Table.Td>{item.areaValue}</Table.Td>
@@ -38,8 +38,8 @@ const ShopsTable: FC<ShopsTableProps> = ({ data, withDelete, deleteRows }) => {
 
   return (
     <Table
-      horizontalSpacing="45px"
-      verticalSpacing="17px"
+      horizontalSpacing="25px"
+      verticalSpacing="15px"
       highlightOnHover
       className=" mt-8 rounded-md"
       highlightOnHoverColor="#4169ee16"

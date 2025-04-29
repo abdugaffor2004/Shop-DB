@@ -50,3 +50,12 @@ export const GET = async (request: NextRequest) => {
 
   return NextResponse.json(shops, { status: 200 });
 };
+
+export const DELETE = async (request: NextRequest) => {
+  const searchParams = request.nextUrl.searchParams;
+  const id = searchParams.get('id');
+
+  await prisma.shop.delete({ where: { id: id || '' } });
+
+  return NextResponse.json({ message: 'Магазин был успешно удален' }, { status: 200 });
+};
