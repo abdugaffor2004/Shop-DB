@@ -20,7 +20,7 @@ export const RootProvider = ({ children }) => {
               styles: () => ({
                 input: {
                   backgroundColor: 'white',
-                  color: '#c9c9c9',
+                  color: '#000',
                 },
               }),
             },
@@ -28,7 +28,7 @@ export const RootProvider = ({ children }) => {
               styles: () => ({
                 input: {
                   backgroundColor: 'white',
-                  color: '#c9c9c9',
+                  color: '#000',
                 },
               }),
             },
