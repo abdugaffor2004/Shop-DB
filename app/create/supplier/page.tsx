@@ -13,7 +13,7 @@ import { MultiSelectAsync } from '@/app/components/MultiSelectAsync';
 import { SupplierFormValues } from './types/SupplierFormValues';
 import { useShopsFilterQuery } from '@/app/search/shops/useShopsFilterQuery';
 
-const createShop = async (data: SupplierFormValues) => {
+const createSupplier = async (data: SupplierFormValues) => {
   const response = await axios.post(`/api/supplier`, data, {
     headers: {
       'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ const createShop = async (data: SupplierFormValues) => {
   return { status: response.status, data: response.data };
 };
 
-const createSupplier: FC = () => {
+const CreateSupplier: FC = () => {
   const { data: shops, filterOptions: shopsFilterOptions } = useShopsFilterQuery();
 
   const form = useForm<SupplierFormValues>({
@@ -137,4 +137,4 @@ const createSupplier: FC = () => {
   );
 };
 
-export default createSupplier;
+export default CreateSupplier;
