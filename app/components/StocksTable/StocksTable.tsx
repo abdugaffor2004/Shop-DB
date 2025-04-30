@@ -2,7 +2,7 @@
 
 import { ActionIcon, Pagination, Table } from '@mantine/core';
 import { IconChecks, IconEdit, IconTrash } from '@tabler/icons-react';
-import classes from './SuppliersTable.module.css';
+import classes from './StocksTable.module.css';
 import React, { FC } from 'react';
 import { useToggle } from '@mantine/hooks';
 import { usePagination } from '@/app/hooks/usePagination';

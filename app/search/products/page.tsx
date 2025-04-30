@@ -49,7 +49,7 @@ const Products: FC = () => {
               value={selectedFilters.category}
               onChange={item => setSelectedFilters(prev => ({ ...prev, position: item }))}
             />
-            <SelectAsync
+            {/* <SelectAsync
               className="w-full"
               placeholder="Магазин"
               options={filterOptions.shopOptions}
@@ -58,7 +58,7 @@ const Products: FC = () => {
               }}
               value={selectedFilters.shop}
               onChange={item => setSelectedFilters(prev => ({ ...prev, position: item }))}
-            />
+            /> */}
           </div>
         </div>
 

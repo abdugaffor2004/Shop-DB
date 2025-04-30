@@ -48,6 +48,7 @@ export const GET = async (request: NextRequest) => {
         quantityInWarehouse:true,
         isActive:true,
         createdAt:true,
+        category:true,
         shops:true
     }, 
   });

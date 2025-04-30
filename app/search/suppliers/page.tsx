@@ -42,10 +42,10 @@ const Shops: FC = () => {
               placeholder="Название"
               options={filterOptions.nameOptions}
               fetchOptions={async () => {
-                setSelectedFilters(prev => ({ ...prev, position: null }));
+                setSelectedFilters(prev => ({ ...prev, name: null }));
               }}
               value={selectedFilters.name}
-              onChange={item => setSelectedFilters(prev => ({ ...prev, position: item }))}
+              onChange={item => setSelectedFilters(prev => ({ ...prev, name: item }))}
             />
           </div>
         </div>

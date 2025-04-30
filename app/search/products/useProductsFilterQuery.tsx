@@ -32,18 +32,18 @@ export const useProductsFilterQuery = (searchParams?: ProductFilterSearchparams)
     const categoryOptions: Handbook[] =
         data
     ?.map(products => ({ value: products.id, label: products.category.name }))
-    .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
+    .filter((item, index, arr) => index === arr.findIndex(c => c.label === item.label)) ?? [];
 
-    const shopOptions: Handbook[] =
-      data
-    ?.map(products => ({ value: products.id, label: products.shop.name }))
-    .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
+    // const shopOptions: Handbook[] =
+    //   data
+    // ?.map(products => ({ value: products.id, label: products.shop.name }))
+    // .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
     
 
   const productFilterOptions = {
     brandOptions,
     categoryOptions,
-    shopOptions
+    // shopOptions
   };
 
   return { data, filterOptions: productFilterOptions, ...rest };
