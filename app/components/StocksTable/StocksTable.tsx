@@ -20,7 +20,6 @@ const StocksTable: FC<StocksTableProps> = ({ data, withDelete, deleteRows }) => 
   const rows = currentItems.map(item => (
     <Table.Tr key={item.id}>
       <Table.Td>{item.shop.name}</Table.Td>
-      <Table.Td>{item.title}</Table.Td>
       <Table.Td>{item.startDate}</Table.Td>
       <Table.Td>{item.endDate}</Table.Td>
       <Table.Td>{item.discountPercentage}</Table.Td>

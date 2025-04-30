@@ -44,10 +44,10 @@ const Products: FC = () => {
               placeholder="Категория"
               options={filterOptions.categoryOptions}
               fetchOptions={async () => {
-                setSelectedFilters(prev => ({ ...prev, position: null }));
+                setSelectedFilters(prev => ({ ...prev, category: null }));
               }}
               value={selectedFilters.category}
-              onChange={item => setSelectedFilters(prev => ({ ...prev, position: item }))}
+              onChange={item => setSelectedFilters(prev => ({ ...prev, category: item }))}
             />
             {/* <SelectAsync
               className="w-full"
