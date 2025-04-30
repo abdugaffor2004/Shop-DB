@@ -46,3 +46,21 @@ export const DELETE = async (request: NextRequest) => {
 
   return NextResponse.json({ message: 'Поставщик был успешно удален' }, { status: 200 });
 };
+export const POST = async (request: NextRequest) => {
+  const requestData = await request.json();
+
+  const newSupplier = await prisma.supplier.create({
+    data: {
+      name: requestData.name,
+      email: requestData.email,
+      phoneNumber: requestData.phoneNumber,
+      address: requestData.address,
+      city: requestData.city,
+      region: requestData.region,
+      country: requestData.country,
+      shops: { connect: requestData.shop },
+    },
+  });
+
+  return NextResponse.json(newSupplier, { status: 200 });
+};
