@@ -50,7 +50,8 @@ export const useShopsFilterQuery = (searchParams?: ShopsFilterSearchparams) => {
   const positionOptions: Handbook[] =
     data
       ?.flatMap(shop => shop.employees)
-      .map(employee => ({ value: employee.id, label: employee.position })) ?? [];
+      .map(employee => ({ value: employee.id, label: employee.position }))
+      .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
 
   const shopsFilterOptions = {
     cityOptions,
