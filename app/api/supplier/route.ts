@@ -58,7 +58,7 @@ export const POST = async (request: NextRequest) => {
       city: requestData.city,
       region: requestData.region,
       country: requestData.country,
-      shops: { connect: requestData.shop },
+
     },
   });
 

@@ -45,7 +45,7 @@ const CreateSupplier: FC = () => {
     form.reset();
   };
 
-  const [selectedShop, setSelectedShop] = useState<Handbook | null>();
+  const [selectedShops, shopsHandlers] = useListState<Handbook>([]);
 
 
   return (
@@ -110,17 +110,17 @@ const CreateSupplier: FC = () => {
         </Grid.Col>
         <Grid.Col>
             
-      <SelectAsync
+        <MultiSelectAsync
             placeholder="Магазин"
-            className="mt-5 w-full flex-7/12"
-            options={shops ? shops.map(shop => ({
-                value: shop.id,
-                label: shop.name,
-              })) : []}
-            value={selectedShop || null}
+            className="w-full flex-7/12"
+            options={shopsFilterOptions.nameOptions}
+            value={selectedShops}
             onChange={payload => {
-              setSelectedShop(payload);
-              form.setFieldValue('shopId', payload?.value || null);
+                shopsHandlers.setState(payload);
+                const result = shops?.filter(item =>
+                payload.find(value => value.value === item.id),
+              );
+              form.setFieldValue('shopId', result || []);
             }}
           />
         </Grid.Col>
