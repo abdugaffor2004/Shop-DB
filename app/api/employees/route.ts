@@ -62,7 +62,6 @@ export const POST = async (request: NextRequest) => {
       terminationDate: requestData.terminationDate,
       email: requestData.email,
       phoneNumber: requestData.phoneNumber,
-      shop: { connect: requestData.shop },
     },
   });
 

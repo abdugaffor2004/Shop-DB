@@ -24,7 +24,7 @@ const createEmployee = async (data: EmployeeFormValues) => {
 };
 
 const CreateEmployee: FC = () => {
-  const [selectedShop, setSelectedShop] = useState<Handbook | null>();
+  const [selectedShops, shopsHandlers] = useListState<Handbook>([]);
   const [selectedEmployee, setSelectedEmployee] = useState<Handbook | null>();
 
   const form = useForm<EmployeeFormValues>({
@@ -122,17 +122,17 @@ const CreateEmployee: FC = () => {
                 form.setFieldValue('employeeId', payload?.value || null);
             }}
             />
-          <SelectAsync
+          <MultiSelectAsync
             placeholder="Магазин"
-            className="mt-2 w-full flex-7/12"
-            options={shops ? shops.map(shop => ({
-                value: shop.id,
-                label: shop.name,
-              })) : []}
-            value={selectedShop || null}
+            className="w-full flex-7/12"
+            options={shopsFilterOptions.nameOptions}
+            value={selectedShops}
             onChange={payload => {
-              setSelectedShop(payload);
-              form.setFieldValue('shopId', payload?.value || null);
+                shopsHandlers.setState(payload);
+                const result = shops?.filter(item =>
+                payload.find(value => value.value === item.id),
+              );
+              form.setFieldValue('shops', result || []);
             }}
           />
         </Grid.Col>
