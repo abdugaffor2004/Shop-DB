@@ -193,7 +193,9 @@ model Location {
 // Склад
 model Warehouse {
   id                      String        @default(cuid())   @id
-  count                   Int
+  name                    String
+  size                    Int?
+  count                   Int?
   lastDepositDate         String? // Дата последнего пополнения
 
  
