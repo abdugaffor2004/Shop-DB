@@ -12,6 +12,7 @@ import { useListState } from '@mantine/hooks';
 import { MultiSelectAsync } from '@/app/components/MultiSelectAsync';
 import { StockFormValues } from './types/StockFormValue';
 import { useShopsFilterQuery } from '@/app/search/shops/useShopsFilterQuery';
+import { useWarehouseFilterQuery } from '@/app/search/warehouses/useWarehousesFilterQuery';
 
 const createShop = async (data: StockFormValues) => {
   const response = await axios.post(`/api/stocks`, data, {
@@ -23,7 +24,7 @@ const createShop = async (data: StockFormValues) => {
 };
 
 const CreateShop: FC = () => {
-  const [selectedShop, setSelectedShop] = useState<Handbook | null>();
+  const [selectedShops, shopsHandlers] = useListState<Handbook>([]);
 
 
   const form = useForm<StockFormValues>({
@@ -43,7 +44,7 @@ const CreateShop: FC = () => {
   const handleSubmit = (formValues: StockFormValues) => {
     createShop(formValues);
     form.reset();
-    setSelectedShop(null);
+  
   };
 
   const { data: shops, filterOptions: shopsFilterOptions } = useShopsFilterQuery();
@@ -100,17 +101,17 @@ const CreateShop: FC = () => {
           />
         </Grid.Col>
         <Grid.Col>
-        <SelectAsync
+        <MultiSelectAsync
             placeholder="Магазин"
-            className="mt-2 w-full flex-7/12"
-            options={shops ? shops.map(shop => ({
-                value: shop.id,
-                label: shop.name,
-              })) : []}
-            value={selectedShop || null}
+            className="w-full flex-7/12"
+            options={shopsFilterOptions.nameOptions}
+            value={selectedShops}
             onChange={payload => {
-              setSelectedShop(payload);
-              form.setFieldValue('shopId', payload?.value || null);
+                shopsHandlers.setState(payload);
+                const result = shops?.filter(item =>
+                payload.find(value => value.value === item.id),
+              );
+              form.setFieldValue('shops', result || []);
             }}
           />
 
