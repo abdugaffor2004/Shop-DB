@@ -29,7 +29,7 @@ export const useEmployeesFilterQuery = (searchParams?: EmployeesFilterSearchPara
       ?.map(employee => ({ value: employee.id, label: employee.position }))
       .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
 
-  const acceptDateoptions: Handbook[] =
+  const acceptDateOptions: Handbook[] =
     data
       ?.map(employee => ({ value: employee.id, label: employee.acceptDate }))
       .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
@@ -39,10 +39,17 @@ export const useEmployeesFilterQuery = (searchParams?: EmployeesFilterSearchPara
       ?.map(employee => ({ value: employee.id, label: employee.terminationDate }))
       .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
 
+  const nameOptions: Handbook[] =
+    data?.map(employee => ({
+      value: employee.id,
+      label: `${employee.lastName} ${employee.firstName}`,
+    })) ?? [];
+
   const employeeFilterOptions = {
     positionOptions,
-    acceptDateoptions,
+    acceptDateOptions,
     terminationDateOptions,
+    nameOptions,
   };
 
   return { data, filterOptions: employeeFilterOptions, ...rest };

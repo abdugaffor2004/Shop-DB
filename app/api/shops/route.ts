@@ -60,3 +60,22 @@ export const DELETE = async (request: NextRequest) => {
 
   return NextResponse.json({ message: 'Магазин был успешно удален' }, { status: 200 });
 };
+
+export const POST = async (request: NextRequest) => {
+  const requestData = await request.json();
+
+  const newShop = await prisma.shop.create({
+    data: {
+      name: requestData.name,
+      address: requestData.address,
+      launchedDate: requestData.launchedDate,
+      closedDate: requestData.closedDate,
+      areaValue: requestData.areaValue,
+      locationId: requestData.locationId ?? null,
+      stocks: { connect: requestData.stocks },
+      employees: { connect: requestData.employees },
+    },
+  });
+
+  return NextResponse.json(newShop, { status: 200 });
+};
