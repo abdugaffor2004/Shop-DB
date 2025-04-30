@@ -1,6 +1,6 @@
 import { Shop } from '../../shops/types/Shop';
 
-interface Category{
+export interface Category{
     id: string;
     name: string;
     description: string;
