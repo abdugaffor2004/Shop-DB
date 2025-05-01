@@ -61,6 +61,7 @@ export const useShopsFilterQuery = (searchParams?: ShopsFilterSearchparams) => {
     cityOptions,
     launchedDateOptions,
     closedDateOptions,
+    nameOptions,
     positionOptions,
     nameOptions,
   };

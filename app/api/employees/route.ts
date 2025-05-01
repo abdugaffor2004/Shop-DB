@@ -35,6 +35,7 @@ export const GET = async (request: NextRequest) => {
       position: true,
       terminationDate: true,
       shop: true,
+      shopId:true,
     },
   });
 
@@ -48,4 +49,21 @@ export const DELETE = async (request: NextRequest) => {
   await prisma.employee.delete({ where: { id: id || '' } });
 
   return NextResponse.json({ message: 'Работник был успешно удален' }, { status: 200 });
+};
+export const POST = async (request: NextRequest) => {
+  const requestData = await request.json();
+
+  const newEmployee = await prisma.employee.create({
+    data: {
+      firstName: requestData.firstName,
+      lastName: requestData.lastName,
+      position: requestData.position,
+      acceptDate: requestData.acceptDate,
+      terminationDate: requestData.terminationDate,
+      email: requestData.email,
+      phoneNumber: requestData.phoneNumber,
+    },
+  });
+
+  return NextResponse.json(newEmployee, { status: 200 });
 };
