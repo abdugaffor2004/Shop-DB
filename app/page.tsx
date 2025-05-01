@@ -1,5 +1,5 @@
 'use client';
-import { Box, Flex, Text } from '@mantine/core';
+import { Box, Center, Flex, Loader, Text } from '@mantine/core';
 import ShopCountByCityTable from './components/ShopCountByCityTable/ShopCountByCityTable';
 import { useStatistics } from './useStatistics';
 import ShopCountByLocationTable from './components/ShopCountByLocationTable/ShopCountByLocationTable';
@@ -11,7 +11,7 @@ import {
 } from '@tabler/icons-react';
 
 export default function Home() {
-  const { data: statistics } = useStatistics();
+  const { data: statistics, isLoading } = useStatistics();
 
   return (
     <main className="mx-20">
@@ -20,13 +20,26 @@ export default function Home() {
           <Text fw="bold" fz={18}>
             Количество магазинов по городам
           </Text>
-          <ShopCountByCityTable data={statistics?.shopCountByCity || []} />
+          {isLoading ? (
+            <Center h="20vh">
+              <Loader color="blue" />
+            </Center>
+          ) : (
+            <ShopCountByCityTable data={statistics?.shopCountByCity || []} />
+          )}
         </Box>
+
         <Box className="w-full px-10 py-6 bg-white rounded-xl h-fit">
           <Text fw="bold" fz={18}>
             Количество магазинов по областям
           </Text>
-          <ShopCountByLocationTable data={statistics?.shopCountByLocation || []} />
+          {isLoading ? (
+            <Center h="20vh">
+              <Loader color="blue" />
+            </Center>
+          ) : (
+            <ShopCountByLocationTable data={statistics?.shopCountByLocation || []} />
+          )}
         </Box>
       </div>
 
@@ -39,9 +52,15 @@ export default function Home() {
             <IconShoppingBag color="#008be6" size={32} />
           </Flex>
 
-          <Text c="blue" fw={700} fz={34}>
-            {statistics?.shopsTotalCount} шт.
-          </Text>
+          {isLoading ? (
+            <Center h="20vh">
+              <Loader color="blue" />
+            </Center>
+          ) : (
+            <Text c="blue" fw={700} fz={34}>
+              {statistics?.shopsTotalCount} шт.
+            </Text>
+          )}
         </Box>
 
         <Box className="p-5 bg-white  rounded-xl">
@@ -52,9 +71,15 @@ export default function Home() {
             <IconBuildingWarehouse color="#008be6" size={32} />
           </Flex>
 
-          <Text c="blue" fw={700} fz={34}>
-            {statistics?.warehousesTotalCount} шт.
-          </Text>
+          {isLoading ? (
+            <Center h="20vh">
+              <Loader color="blue" />
+            </Center>
+          ) : (
+            <Text c="blue" fw={700} fz={34}>
+              {statistics?.warehousesTotalCount} шт.
+            </Text>
+          )}
         </Box>
 
         <Box className="p-5 bg-white  rounded-xl">
@@ -65,11 +90,17 @@ export default function Home() {
             <IconPointerDollar color="#008be6" size={32} />
           </Flex>
 
-          <Text c="blue" fw={700} fz={34}>
-            {statistics?.suppliersTotalCount} шт.
-          </Text>
+          {isLoading ? (
+            <Center h="20vh">
+              <Loader color="blue" />
+            </Center>
+          ) : (
+            <Text c="blue" fw={700} fz={34}>
+              {statistics?.suppliersTotalCount} шт.
+            </Text>
+          )}
         </Box>
-        
+
         <Box className="p-5 bg-white  rounded-xl">
           <Flex gap={30} align="center">
             <Text fw={700} fz={24}>
@@ -78,9 +109,15 @@ export default function Home() {
             <IconUserFilled color="#008be6" size={32} />
           </Flex>
 
-          <Text c="blue" fw={700} fz={34}>
-            {statistics?.employeesTotalCount} шт.
-          </Text>
+          {isLoading ? (
+            <Center h="20vh">
+              <Loader color="blue" />
+            </Center>
+          ) : (
+            <Text c="blue" fw={700} fz={34}>
+              {statistics?.employeesTotalCount} шт.
+            </Text>
+          )}
         </Box>
       </Flex>
     </main>
