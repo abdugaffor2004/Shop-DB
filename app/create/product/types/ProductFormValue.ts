@@ -1,12 +1,4 @@
-import { Shop } from '../../shops/types/Shop';
-
-export interface Category {
-  id: string;
-  name: string;
-  description: string;
-}
-export interface Product {
-  id: string;
+export interface ProductFormValues {
   name: string;
   description: string;
   price: number;
@@ -18,6 +10,6 @@ export interface Product {
   quantityInWarehouse: number;
   isActive: boolean;
   createdAt: string;
-  category: Category;
-  shop: Shop;
+  categoryId: string | null;
+  shops: { id: string }[];
 }

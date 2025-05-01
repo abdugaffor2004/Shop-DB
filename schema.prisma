@@ -53,19 +53,19 @@ model Product {
   id                      String        @default(cuid())   @id
   name                    String        // название
   description             String?       // описание
-  price                   Float         // стоимомть
-  costPrice               Float         // себестоимоть
+  price                   Float?         // стоимомть
+  costPrice               Float?         // себестоимоть
   brand                   String?       // брэнд
   weight                  Float?        // масса
   size                    String?       // Размер
   color                   String?       // Цвет
-  quantityInWarehouse     Int           // Количество на складе
-  isActive                Boolean       @default(false) // Активный
-  createdAt               String        // Дата создания
+  quantityInWarehouse     Int?           // Количество на складе
+  isActive                Boolean?       @default(false) // Активный
+  createdAt               String?        // Дата создания
 
   categoryId              String?
   category                Category?      @relation(fields: [categoryId], references: [id])
-  feedBacks                  FeedBack[]
+  feedBacks               FeedBack[]
   refundReasons           RefundReason[]
   warehouses              Warehouse[]
   shops                   Shop[]

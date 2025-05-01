@@ -11,6 +11,7 @@ interface SelectAsyncProps {
   fetchOptions?: () => void;
   fetchData?: () => void;
   options: Handbook[];
+  label?: string;
   value: Handbook | null;
   className?: string;
   onChange: (value: Handbook | null) => void;

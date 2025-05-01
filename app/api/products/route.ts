@@ -62,3 +62,26 @@ export const DELETE = async (request: NextRequest) => {
 
   return NextResponse.json({ message: 'Товар был успешно удален' }, { status: 200 });
 };
+
+export const POST = async (request: NextRequest) => {
+  const requestData = await request.json();
+
+  const newProduct = await prisma.product.create({
+    data: {
+      name: requestData.name,
+      description: requestData.description,
+      price: requestData.price,
+      costPrice: requestData.costPrice,
+      brand: requestData.brand,
+      weight: requestData.weight,
+      size: requestData.size,
+      quantityInWarehouse: requestData.quantityInWarehouse,
+      color: requestData.color,
+      isActive: requestData.isActive,
+      createdAt: requestData.createdAt,
+      categoryId: requestData.categoryId,
+      shops: { connect: requestData.shops },
+    },
+  });
+  return NextResponse.json(newProduct, { status: 200 });
+};
