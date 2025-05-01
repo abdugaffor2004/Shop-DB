@@ -7,7 +7,6 @@ import { useWarehouseFilterQuery } from './useWarehousesFilterQuery';
 import { useWarehousesDelete } from './useWarehousesDelete';
 import WarehouseTable from '@/app/components/WarehousesTable/WarehousesTable';
 
-
 interface SelectedFilters {
   shop: Handbook | null;
   size: Handbook | null;
@@ -16,9 +15,9 @@ interface SelectedFilters {
 
 const Warehouses: FC = () => {
   const [selectedFilters, setSelectedFilters] = useState<SelectedFilters>({
-    shop:null,
+    shop: null,
     size: null,
-    lastDepositDate:null,
+    lastDepositDate: null,
   });
 
   const { data, filterOptions, isLoading } = useWarehouseFilterQuery(selectedFilters);

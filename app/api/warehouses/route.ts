@@ -17,14 +17,16 @@ export const GET = async (request: NextRequest) => {
         name: shop,
       },
     };
-
-    if (size) {
-      where.size = parseInt(size);
-    }
-    if (lastDepositDate) {
-      where.lastDepositDate = lastDepositDate;
-    }
   }
+
+  if (size) {
+    where.size = parseInt(size);
+  }
+
+  if (lastDepositDate) {
+    where.lastDepositDate = lastDepositDate;
+  }
+  
   const warehouses = await prisma.warehouse.findMany({
     where,
     select: {
@@ -59,11 +61,9 @@ export const POST = async (request: NextRequest) => {
       lastDepositDate: requestData.lastDepositDate,
       size: requestData.size,
       products: { connect: requestData.products },
-      // shops: { connect: requestData.shops },
+      shops: { connect: requestData.shops },
     },
   });
-
-  
 
   return NextResponse.json(newWarehouse, { status: 200 });
 };
