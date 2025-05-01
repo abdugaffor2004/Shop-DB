@@ -1,6 +1,6 @@
 'use client';
 import { SelectAsync } from '@/app/components/SelectAsync';
-import { Button, Flex, Grid, Group, NumberInput, TextInput } from '@mantine/core';
+import { Button, Flex, Grid, Group, TextInput } from '@mantine/core';
 
 import { IconPlus } from '@tabler/icons-react';
 import React, { FC, useState } from 'react';
@@ -31,14 +31,14 @@ const CreateEmployee: FC = () => {
     mode: 'controlled',
     initialValues: {
       firstName: '',
-      lastName:'',
-      position:'',
-      acceptDate:'',
-      terminationDate:'',
-      email:'',
-      phonenumber:'',
-      shopId :null,
-      },
+      lastName: '',
+      position: '',
+      acceptDate: '',
+      terminationDate: '',
+      email: '',
+      phonenumber: '',
+      shopId: null,
+    },
     validate: {},
   });
 
@@ -64,21 +64,18 @@ const CreateEmployee: FC = () => {
             {...form.getInputProps('firstName')}
           />
 
-          
-            <TextInput
-              className="w-full mt-5"
-              label="Дата приема"
-              placeholder="Введите дату приема..."
-              {...form.getInputProps('acceptDate')}
-            />
-            <TextInput
-              className="w-full mt-5"
-              label="Дата увольнения"
-              placeholder="Введите дату увольнения..."
-              {...form.getInputProps('terminati')}
-            />
-
-
+          <TextInput
+            className="w-full mt-5"
+            label="Дата приема"
+            placeholder="Введите дату приема..."
+            {...form.getInputProps('acceptDate')}
+          />
+          <TextInput
+            className="w-full mt-5"
+            label="Дата увольнения"
+            placeholder="Введите дату увольнения..."
+            {...form.getInputProps('terminati')}
+          />
         </Grid.Col>
         <Grid.Col span={6}>
           <TextInput
@@ -87,51 +84,48 @@ const CreateEmployee: FC = () => {
             placeholder="Введите фамилию..."
             {...form.getInputProps('lastName')}
           />
-            <div className="flex-col gap-5">
-          <TextInput
-            className="w-full mt-5"
-            label="email"
-            placeholder="Введите email..."
-            {...form.getInputProps('email')}
-          />
+          <div className="flex-col gap-5">
+            <TextInput
+              className="w-full mt-5"
+              label="email"
+              placeholder="Введите email..."
+              {...form.getInputProps('email')}
+            />
 
             <TextInput
-            className="w-full mt-5"
-            label="Номер телефона"
-            placeholder="Введите телефон без +7"
-            {...form.getInputProps('phoneNumber')}
-          />
+              className="w-full mt-5"
+              label="Номер телефона"
+              placeholder="Введите телефон без +7"
+              {...form.getInputProps('phoneNumber')}
+            />
           </div>
         </Grid.Col>
         <Grid.Col>
-        <SelectAsync
+          <SelectAsync
             placeholder="Выберите должность"
             className="mt-2 w-full flex-7/12"
             options={
-                employees
-                ? [...new Set(employees.map(employees => employees.position))]
-                .map((position) => ({
-                value: position, 
-                label: position,
-          }))
-      : []
+              employees
+                ? [...new Set(employees.map(employees => employees.position))].map(position => ({
+                    value: position,
+                    label: position,
+                  }))
+                : []
             }
             value={selectedEmployee || null}
-            onChange={(payload) => {
-                setSelectedEmployee(payload);
-                form.setFieldValue('employeeId', payload?.value || null);
+            onChange={payload => {
+              setSelectedEmployee(payload);
+              form.setFieldValue('employeeId', payload?.value || null);
             }}
-            />
+          />
           <MultiSelectAsync
             placeholder="Магазин"
             className="w-full flex-7/12"
             options={shopsFilterOptions.nameOptions}
             value={selectedShops}
             onChange={payload => {
-                shopsHandlers.setState(payload);
-                const result = shops?.filter(item =>
-                payload.find(value => value.value === item.id),
-              );
+              shopsHandlers.setState(payload);
+              const result = shops?.filter(item => payload.find(value => value.value === item.id));
               form.setFieldValue('shops', result || []);
             }}
           />

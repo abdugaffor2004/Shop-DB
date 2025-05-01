@@ -8,7 +8,6 @@ import { useToggle } from '@mantine/hooks';
 import { usePagination } from '@/app/hooks/usePagination';
 import { Warehouse } from '@/app/search/warehouses/types/Warehouses';
 
-
 interface WarehouseTableProps {
   data: Warehouse[];
   withDelete?: boolean;
@@ -23,7 +22,7 @@ const WarehouseTable: FC<WarehouseTableProps> = ({ data, withDelete, deleteRows 
       <Table.Td>{item.name}</Table.Td>
       <Table.Td>{item.size}</Table.Td>
       <Table.Td>{item.lastDepositDate}</Table.Td>
-      <Table.Td>{item.count}</Table.Td>
+      <Table.Td>{item.products.length}</Table.Td>
       {withDelete && isEditable && (
         <Table.Td p={10}>
           <ActionIcon color="red" variant="subtle" onClick={() => deleteRows?.(item.id)}>
@@ -46,7 +45,6 @@ const WarehouseTable: FC<WarehouseTableProps> = ({ data, withDelete, deleteRows 
     >
       <Table.Thead bg="#4169e2">
         <Table.Tr>
-
           <Table.Th className="text-[16px] text-white ">Название склада</Table.Th>
           <Table.Th className="text-[16px] text-white ">Размер м^3</Table.Th>
           <Table.Th className="text-[16px] text-white ">Дата последнего пополнения</Table.Th>

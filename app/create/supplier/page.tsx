@@ -1,9 +1,8 @@
 'use client';
-import { SelectAsync } from '@/app/components/SelectAsync';
-import { Button, Flex, Grid, Group, NumberInput, TextInput } from '@mantine/core';
 
+import { Button, Flex, Grid, Group, TextInput } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 
 import axios from 'axios';
 import { Handbook } from '@/app/types/Handbook';
@@ -47,7 +46,6 @@ const CreateSupplier: FC = () => {
 
   const [selectedShops, shopsHandlers] = useListState<Handbook>([]);
 
-
   return (
     <form
       onSubmit={form.onSubmit(values => handleSubmit(values))}
@@ -62,7 +60,6 @@ const CreateSupplier: FC = () => {
             {...form.getInputProps('name')}
           />
 
-
           <TextInput
             className="w-full mt-5"
             label="email"
@@ -70,14 +67,12 @@ const CreateSupplier: FC = () => {
             {...form.getInputProps('email')}
           />
 
-            <TextInput
+          <TextInput
             className="w-full mt-5"
             label="Номер телефона"
             placeholder="Введите телефон без +7"
             {...form.getInputProps('phoneNumber')}
           />
-
-            
         </Grid.Col>
         <Grid.Col span={6}>
           <TextInput
@@ -87,19 +82,19 @@ const CreateSupplier: FC = () => {
             {...form.getInputProps('address')}
           />
           <div className="flex gap-5">
-          <TextInput
-            className="w-full mt-5"
-            label="Город"
-            placeholder="Введите город..."
-            {...form.getInputProps('city')}
-          />
+            <TextInput
+              className="w-full mt-5"
+              label="Город"
+              placeholder="Введите город..."
+              {...form.getInputProps('city')}
+            />
 
-          <TextInput
-            className="w-full mt-5"
-            label="Регион"
-            placeholder="Введите регион..."
-            {...form.getInputProps('region')}
-          />
+            <TextInput
+              className="w-full mt-5"
+              label="Регион"
+              placeholder="Введите регион..."
+              {...form.getInputProps('region')}
+            />
           </div>
           <TextInput
             className="w-full mt-5 "
@@ -109,23 +104,20 @@ const CreateSupplier: FC = () => {
           />
         </Grid.Col>
         <Grid.Col>
-            
-        <MultiSelectAsync
+          <MultiSelectAsync
             placeholder="Магазин"
             className="w-full flex-7/12"
             options={shopsFilterOptions.nameOptions}
             value={selectedShops}
             onChange={payload => {
-                shopsHandlers.setState(payload);
-                const result = shops?.filter(item =>
-                payload.find(value => value.value === item.id),
-              );
+              shopsHandlers.setState(payload);
+              const result = shops?.filter(item => payload.find(value => value.value === item.id));
               form.setFieldValue('shopId', result || []);
             }}
           />
         </Grid.Col>
       </Grid>
-    
+
       <Flex justify="end">
         <Group className="mt-8">
           <Button disabled={!form.isValid()} type="submit">
