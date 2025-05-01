@@ -8,14 +8,12 @@ import React, { FC, useState } from 'react';
 import axios from 'axios';
 import { Handbook } from '@/app/types/Handbook';
 import { useForm } from '@mantine/form';
-import { useListState } from '@mantine/hooks';
-import { MultiSelectAsync } from '@/app/components/MultiSelectAsync';
 import { EmployeeFormValues } from './types/EmployeeFormValue';
 import { useShopsFilterQuery } from '@/app/search/shops/useShopsFilterQuery';
 import { useEmployeesFilterQuery } from '@/app/search/employees/useEmployeesFilterQuery';
 
 const createEmployee = async (data: EmployeeFormValues) => {
-  const response = await axios.post(`/api/employee`, data, {
+  const response = await axios.post(`/api/employees`, data, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -24,7 +22,7 @@ const createEmployee = async (data: EmployeeFormValues) => {
 };
 
 const CreateEmployee: FC = () => {
-  const [selectedShops, shopsHandlers] = useListState<Handbook>([]);
+  const [selectedShops, setSelectedShop] = useState<Handbook | null>();
   const [selectedEmployee, setSelectedEmployee] = useState<Handbook | null>();
 
   const form = useForm<EmployeeFormValues>({
@@ -36,7 +34,7 @@ const CreateEmployee: FC = () => {
       acceptDate: '',
       terminationDate: '',
       email: '',
-      phonenumber: '',
+      phoneNumber: '',
       shopId: null,
     },
     validate: {},
@@ -47,8 +45,8 @@ const CreateEmployee: FC = () => {
     form.reset();
   };
 
-  const { data: shops, filterOptions: shopsFilterOptions } = useShopsFilterQuery();
-  const { data: employees, filterOptions: employeeFilterOptions } = useEmployeesFilterQuery();
+  const { filterOptions: shopsFilterOptions } = useShopsFilterQuery();
+  const { filterOptions: employeeFilterOptions } = useEmployeesFilterQuery();
 
   return (
     <form
@@ -74,7 +72,7 @@ const CreateEmployee: FC = () => {
             className="w-full mt-5"
             label="Дата увольнения"
             placeholder="Введите дату увольнения..."
-            {...form.getInputProps('terminati')}
+            {...form.getInputProps('terminationDate')}
           />
         </Grid.Col>
         <Grid.Col span={6}>
@@ -104,29 +102,21 @@ const CreateEmployee: FC = () => {
           <SelectAsync
             placeholder="Выберите должность"
             className="mt-2 w-full flex-7/12"
-            options={
-              employees
-                ? [...new Set(employees.map(employees => employees.position))].map(position => ({
-                    value: position,
-                    label: position,
-                  }))
-                : []
-            }
+            options={employeeFilterOptions.positionOptions}
             value={selectedEmployee || null}
             onChange={payload => {
               setSelectedEmployee(payload);
-              form.setFieldValue('employeeId', payload?.value || null);
+              form.setFieldValue('position', payload?.label || '');
             }}
           />
-          <MultiSelectAsync
+          <SelectAsync
             placeholder="Магазин"
-            className="w-full flex-7/12"
+            className="w-full mt-5 flex-7/12"
             options={shopsFilterOptions.nameOptions}
-            value={selectedShops}
+            value={selectedShops || null}
             onChange={payload => {
-              shopsHandlers.setState(payload);
-              const result = shops?.filter(item => payload.find(value => value.value === item.id));
-              form.setFieldValue('shops', result || []);
+              setSelectedShop(payload);
+              form.setFieldValue('shopId', payload?.value || '');
             }}
           />
         </Grid.Col>

@@ -35,7 +35,7 @@ export const GET = async (request: NextRequest) => {
       position: true,
       terminationDate: true,
       shop: true,
-      shopId:true,
+      shopId: true,
     },
   });
 
@@ -50,6 +50,7 @@ export const DELETE = async (request: NextRequest) => {
 
   return NextResponse.json({ message: 'Работник был успешно удален' }, { status: 200 });
 };
+
 export const POST = async (request: NextRequest) => {
   const requestData = await request.json();
 
@@ -62,6 +63,7 @@ export const POST = async (request: NextRequest) => {
       terminationDate: requestData.terminationDate,
       email: requestData.email,
       phoneNumber: requestData.phoneNumber,
+      shopId: requestData.shopId,
     },
   });
 
