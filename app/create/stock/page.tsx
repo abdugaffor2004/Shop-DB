@@ -1,9 +1,8 @@
 'use client';
-import { SelectAsync } from '@/app/components/SelectAsync';
 import { Button, Flex, Grid, Group, NumberInput, TextInput } from '@mantine/core';
 
 import { IconPlus } from '@tabler/icons-react';
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 
 import axios from 'axios';
 import { Handbook } from '@/app/types/Handbook';
@@ -12,7 +11,6 @@ import { useListState } from '@mantine/hooks';
 import { MultiSelectAsync } from '@/app/components/MultiSelectAsync';
 import { StockFormValues } from './types/StockFormValue';
 import { useShopsFilterQuery } from '@/app/search/shops/useShopsFilterQuery';
-import { useWarehouseFilterQuery } from '@/app/search/warehouses/useWarehousesFilterQuery';
 
 const createShop = async (data: StockFormValues) => {
   const response = await axios.post(`/api/stocks`, data, {
@@ -26,14 +24,13 @@ const createShop = async (data: StockFormValues) => {
 const CreateShop: FC = () => {
   const [selectedShops, shopsHandlers] = useListState<Handbook>([]);
 
-
   const form = useForm<StockFormValues>({
     mode: 'controlled',
     initialValues: {
       title: '',
       description: '',
       discountPercentage: 0,
-      fixedDiscount:0,
+      fixedDiscount: 0,
       startDate: '',
       endDate: '',
       shops: [],
@@ -44,7 +41,6 @@ const CreateShop: FC = () => {
   const handleSubmit = (formValues: StockFormValues) => {
     createShop(formValues);
     form.reset();
-  
   };
 
   const { data: shops, filterOptions: shopsFilterOptions } = useShopsFilterQuery();
@@ -63,20 +59,18 @@ const CreateShop: FC = () => {
             {...form.getInputProps('title')}
           />
 
-          
-            <TextInput
-              className="w-full mt-5"
-              label="Дата начала"
-              placeholder="Введите дату..."
-              {...form.getInputProps('startDate')}
-            />
-            <TextInput
-              className="w-full mt-5"
-              label="Дата конца"
-              placeholder="Введите дату..."
-              {...form.getInputProps('endDate')}
-            />
-
+          <TextInput
+            className="w-full mt-5"
+            label="Дата начала"
+            placeholder="Введите дату..."
+            {...form.getInputProps('startDate')}
+          />
+          <TextInput
+            className="w-full mt-5"
+            label="Дата конца"
+            placeholder="Введите дату..."
+            {...form.getInputProps('endDate')}
+          />
         </Grid.Col>
         <Grid.Col span={6}>
           <TextInput
@@ -93,7 +87,7 @@ const CreateShop: FC = () => {
             {...form.getInputProps('discountPercentage')}
           />
 
-            <NumberInput
+          <NumberInput
             className="w-full mt-5"
             label="Фиксированная скидка в рублях"
             placeholder="Введите фиксированную скидку..."
@@ -101,20 +95,21 @@ const CreateShop: FC = () => {
           />
         </Grid.Col>
         <Grid.Col>
-        <MultiSelectAsync
-            placeholder="Магазин"
-            className="w-full flex-7/12"
+          <MultiSelectAsync
+            placeholder="Магазины"
+            className="mt-5 w-full flex-7/12"
             options={shopsFilterOptions.nameOptions}
             value={selectedShops}
             onChange={payload => {
-                shopsHandlers.setState(payload);
-                const result = shops?.filter(item =>
-                payload.find(value => value.value === item.id),
-              );
+              shopsHandlers.setState(payload);
+
+              const result = shops
+                ?.filter(item => payload.find(value => value.value === item.id))
+                .map(item => ({ id: item.id }));
+
               form.setFieldValue('shops', result || []);
             }}
           />
-
         </Grid.Col>
       </Grid>
 

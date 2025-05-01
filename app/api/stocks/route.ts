@@ -61,7 +61,7 @@ export const POST = async (request: NextRequest) => {
       endDate: requestData.endDate,
       discountPercentage: requestData.discountPercentage,
       fixedDiscount: requestData.fixedDiscount,
-      
+      shops: {connect:requestData.shops}
     },
   });
 
