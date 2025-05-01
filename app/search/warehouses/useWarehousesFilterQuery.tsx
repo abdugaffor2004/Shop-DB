@@ -18,7 +18,6 @@ export const useWarehouseFilterQuery = (searchParams?: WarehousesFilterSearchpar
           s: searchParams?.shop?.label,
           sz: searchParams?.size?.label,
           ld: searchParams?.lastDepositDate?.label,
-
         },
       });
       return response.data;
@@ -26,29 +25,37 @@ export const useWarehouseFilterQuery = (searchParams?: WarehousesFilterSearchpar
   });
   const shops = data?.flatMap(w => w.shops) ?? [];
 
-  const uniqueShopsMap = new Map<string, { value: string, label: string }>();
+  const uniqueShopsMap = new Map<string, { value: string; label: string }>();
   for (const shop of shops) {
     // Проверяем, что shop не undefined
     if (!shop) continue;
-  
+
     if (!uniqueShopsMap.has(shop.id)) {
       uniqueShopsMap.set(shop.id, { value: shop.id, label: shop.name });
     }
   }
   const shopOptions: Handbook[] = Array.from(uniqueShopsMap.values());
-    const sizeOptions: Handbook[] =
-      data
-      ?.map(warehouse => ({ value: warehouse.id, label: warehouse.size.toString()}))
+  const sizeOptions: Handbook[] =
+    data
+      ?.map(warehouse => ({ value: warehouse.id, label: warehouse.size.toString() }))
       .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
-      const lastDepositDateOptions: Handbook[] =
-      data
-      ?.map(warehouse => ({ value: warehouse.id, label: warehouse.lastDepositDate}))
+
+  const lastDepositDateOptions: Handbook[] =
+    data
+      ?.map(warehouse => ({ value: warehouse.id, label: warehouse.lastDepositDate }))
       .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
+
+  const nameOptions: Handbook[] =
+    data
+      ?.map(item => ({ value: item.id, label: item.name }))
+      .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
+
 
   const warehouseFilterOptions = {
     shopOptions,
     sizeOptions,
-    lastDepositDateOptions
+    lastDepositDateOptions,
+    nameOptions
   };
 
   return { data, filterOptions: warehouseFilterOptions, ...rest };

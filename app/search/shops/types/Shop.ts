@@ -1,4 +1,5 @@
 import { Employee } from '../../employees/types/employee';
+import { Location } from '../../location/types/location';
 
 export interface Shop {
   id: string;
@@ -9,6 +10,7 @@ export interface Shop {
   launchedDate: string;
   closedDate: string;
   areaValue: number;
+  location: Location;
 
   employees: Employee[];
 }

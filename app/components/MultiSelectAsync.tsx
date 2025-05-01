@@ -76,7 +76,7 @@ export const MultiSelectAsync: FC<MultiSelectAsyncProps> = ({
             )
           }
         >
-          <span className={value.length ? 'text-[#c9c9c9]' : 'text-gray-400'}>{displayValue}</span>
+          <span className={value.length ? 'text-black' : 'text-gray-400'}>{displayValue}</span>
         </TextInput>
       </Combobox.Target>
 
