@@ -21,7 +21,7 @@ const Employees: FC = () => {
   });
 
   const { data, filterOptions, isLoading } = useEmployeesFilterQuery(selectedFilters);
-  const { mutateAsync: deleteEmployee } = useEmployeeDelete();
+  const { mutateAsync: deleteEmployee, isPending } = useEmployeeDelete();
 
   return (
     <div className="mt-10 mx-10">
@@ -42,7 +42,7 @@ const Employees: FC = () => {
             <SelectAsync
               className="w-full"
               placeholder="Дата принятия на работу"
-              options={filterOptions.acceptDateoptions}
+              options={filterOptions.acceptDateOptions}
               fetchOptions={async () => {
                 setSelectedFilters(prev => ({ ...prev, acceptDate: null }));
               }}
@@ -65,7 +65,7 @@ const Employees: FC = () => {
           </div>
         </div>
 
-        {isLoading ? (
+        {isLoading || isPending ? (
           <Center h="60vh">
             <Loader color="blue" />
           </Center>

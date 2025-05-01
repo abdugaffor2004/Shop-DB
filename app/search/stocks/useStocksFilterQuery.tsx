@@ -2,7 +2,6 @@ import { Handbook } from '@/app/types/Handbook';
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import { Stocks } from './types/Stocks';
-import { debugPort } from 'process';
 
 interface StocksFilterSearchparams {
   discountPercentage: Handbook | null;
@@ -25,25 +24,25 @@ export const useStocksFilterQuery = (searchParams?: StocksFilterSearchparams) =>
     },
   });
 
-    const discountPercentageOptions: Handbook[] =
-      data
-        ?.map(stocks => ({ value: stocks.id, label: stocks.discountPercentage.toString() }))
-        .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
-    const startDateoptions: Handbook[] =
-        data
-    ?.map(stocks => ({ value: stocks.id, label: stocks.startDate }))
-    .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
+  const discountPercentageOptions: Handbook[] =
+    data
+      ?.map(stocks => ({ value: stocks.id, label: `${stocks.discountPercentage.toFixed()}%` }))
+      .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
 
-    const endDateOptions: Handbook[] =
-      data
-    ?.map(stocks => ({ value: stocks.id, label: stocks.endDate }))
-    .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
-    
+  const startDateoptions: Handbook[] =
+    data
+      ?.map(stocks => ({ value: stocks.id, label: stocks.startDate }))
+      .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
+
+  const endDateOptions: Handbook[] =
+    data
+      ?.map(stocks => ({ value: stocks.id, label: stocks.endDate }))
+      .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
 
   const stocksFilterOptions = {
     discountPercentageOptions,
     startDateoptions,
-    endDateOptions
+    endDateOptions,
   };
 
   return { data, filterOptions: stocksFilterOptions, ...rest };

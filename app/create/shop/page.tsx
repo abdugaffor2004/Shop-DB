@@ -13,6 +13,8 @@ import { useEmployeesFilterQuery } from '@/app/search/employees/useEmployeesFilt
 import { useListState } from '@mantine/hooks';
 import { MultiSelectAsync } from '@/app/components/MultiSelectAsync';
 import { useSupplierFilterQuery } from '@/app/search/suppliers/useSupplierFilterQuery';
+import { useLocationFilterQuery } from '@/app/search/location/useLocationFIlterQuery';
+import { useWarehouseFilterQuery } from '@/app/search/warehouses/useWarehousesFilterQuery';
 
 const createShop = async (data: ShopFormValues) => {
   const response = await axios.post(`/api/shops`, data, {
@@ -27,12 +29,13 @@ const CreateShop: FC = () => {
   const [selectedLocation, setSelectedLocation] = useState<Handbook | null>();
   const [selectedEmployees, employeeHandlers] = useListState<Handbook>([]);
   const [selectedSuppliers, suppliersHandlers] = useListState<Handbook>([]);
+  const [selectedWarehouses, warehousesHandlers] = useListState<Handbook>([]);
 
   const form = useForm<ShopFormValues>({
     mode: 'controlled',
     initialValues: {
       name: '',
-      address: '',
+      city: '',
       areaValue: 0,
 
       closedDate: '',
@@ -41,6 +44,7 @@ const CreateShop: FC = () => {
       locationId: null,
       stocks: [],
       suppliers: [],
+      warehouses: [],
     },
     validate: {},
   });
@@ -49,10 +53,15 @@ const CreateShop: FC = () => {
     createShop(formValues);
     form.reset();
     setSelectedLocation(null);
+    employeeHandlers.setState([]);
+    suppliersHandlers.setState([]);
+    warehousesHandlers.setState([]);
   };
 
   const { data: employees, filterOptions: employeeFilterOptions } = useEmployeesFilterQuery();
   const { data: suppliers, filterOptions: suppliersFilterOptions } = useSupplierFilterQuery();
+  const { filterOptions: locationFilterOptions } = useLocationFilterQuery();
+  const { data: warehouses, filterOptions: warehousesFilterOptions } = useWarehouseFilterQuery();
 
   return (
     <form
@@ -90,9 +99,9 @@ const CreateShop: FC = () => {
             onChange={payload => {
               employeeHandlers.setState(payload);
 
-              const result = employees?.filter(item =>
-                payload.find(value => value.value === item.id),
-              );
+              const result = employees
+                ?.filter(item => payload.find(value => value.value === item.id))
+                .map(item => ({ id: item.id }));
 
               form.setFieldValue('employees', result || []);
             }}
@@ -101,9 +110,9 @@ const CreateShop: FC = () => {
         <Grid.Col span={6}>
           <TextInput
             className="w-full"
-            label="Адрес"
-            placeholder="Введите адрес..."
-            {...form.getInputProps('address')}
+            label="Город"
+            placeholder="Введите город..."
+            {...form.getInputProps('city')}
           />
 
           <NumberInput
@@ -116,7 +125,7 @@ const CreateShop: FC = () => {
           <SelectAsync
             placeholder="Местоположение"
             className="mt-5 w-full flex-7/12"
-            options={[]}
+            options={locationFilterOptions.regionOptions}
             value={selectedLocation || null}
             onChange={payload => {
               setSelectedLocation(payload);
@@ -125,14 +134,19 @@ const CreateShop: FC = () => {
           />
         </Grid.Col>
         <Grid.Col>
-          <SelectAsync
+          <MultiSelectAsync
             placeholder="Склад"
             className="mt-2 w-full flex-7/12"
-            options={[]}
-            value={selectedLocation || null}
+            options={warehousesFilterOptions.nameOptions}
+            value={selectedWarehouses}
             onChange={payload => {
-              setSelectedLocation(payload);
-              form.setFieldValue('locationId', payload?.value || null);
+              warehousesHandlers.setState(payload);
+
+              const result = warehouses
+                ?.filter(item => payload.find(value => value.value === item.id))
+                .map(item => ({ id: item.id }));
+
+              form.setFieldValue('warehouses', result || []);
             }}
           />
           <MultiSelectAsync
@@ -143,9 +157,9 @@ const CreateShop: FC = () => {
             onChange={payload => {
               suppliersHandlers.setState(payload);
 
-              const result = suppliers?.filter(item =>
-                payload.find(value => value.value === item.id),
-              );
+              const result = suppliers
+                ?.filter(item => payload.find(value => value.value === item.id))
+                .map(item => ({ id: item.id }));
 
               form.setFieldValue('suppliers', result || []);
             }}

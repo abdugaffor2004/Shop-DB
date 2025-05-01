@@ -19,10 +19,17 @@ const StocksTable: FC<StocksTableProps> = ({ data, withDelete, deleteRows }) => 
 
   const rows = currentItems.map(item => (
     <Table.Tr key={item.id}>
-      <Table.Td>{item.shop.name}</Table.Td>
+      <Table.Td>
+        {item.shops
+          .map(item => item.name)
+          .slice(0, 3)
+          .join(', ')}
+        ...
+      </Table.Td>
+
       <Table.Td>{item.startDate}</Table.Td>
       <Table.Td>{item.endDate}</Table.Td>
-      <Table.Td>{item.discountPercentage}</Table.Td>
+      <Table.Td>{item.discountPercentage.toFixed()}%</Table.Td>
       {withDelete && isEditable && (
         <Table.Td p={10}>
           <ActionIcon color="red" variant="subtle" onClick={() => deleteRows?.(item.id)}>
@@ -45,8 +52,7 @@ const StocksTable: FC<StocksTableProps> = ({ data, withDelete, deleteRows }) => 
     >
       <Table.Thead bg="#4169e2">
         <Table.Tr>
-          <Table.Th className="text-[16px] text-white ">Магазин</Table.Th>
-          <Table.Th className="text-[16px] text-white ">Название акции</Table.Th>
+          <Table.Th className="text-[16px] text-white ">Магазины</Table.Th>
           <Table.Th className="text-[16px] text-white ">Начало</Table.Th>
           <Table.Th className="text-[16px] text-white ">Конец</Table.Th>
           <Table.Th className="text-[16px] text-white ">Проценты</Table.Th>

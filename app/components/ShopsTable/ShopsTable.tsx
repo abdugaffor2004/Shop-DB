@@ -24,8 +24,8 @@ const ShopsTable: FC<ShopsTableProps> = ({ data, withDelete, deleteRows }) => {
       <Table.Td>{item.launchedDate}</Table.Td>
       <Table.Td>{item.closedDate ?? '-'}</Table.Td>
       <Table.Td>{item.city}</Table.Td>
-      <Table.Td>{item.region}</Table.Td>
-      <Table.Td>{item.areaValue}</Table.Td>
+      <Table.Td>{item.location.region}</Table.Td>
+      <Table.Td>{item.areaValue.toFixed()}</Table.Td>
       {withDelete && isEditable && (
         <Table.Td p={10}>
           <ActionIcon color="red" variant="subtle" onClick={() => deleteRows?.(item.id)}>

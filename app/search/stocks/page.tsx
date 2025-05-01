@@ -7,7 +7,6 @@ import { useStocksFilterQuery } from './useStocksFilterQuery';
 import { useStocksDelete } from './useStocksDelete';
 import StocksTable from '@/app/components/StocksTable/StocksTable';
 
-
 interface SelectedFilters {
   discountPercentage: Handbook | null;
   startDate: Handbook | null;
@@ -16,13 +15,13 @@ interface SelectedFilters {
 
 const Stocks: FC = () => {
   const [selectedFilters, setSelectedFilters] = useState<SelectedFilters>({
-    discountPercentage:null,
+    discountPercentage: null,
     startDate: null,
-    endDate:null,
+    endDate: null,
   });
 
   const { data, filterOptions, isLoading } = useStocksFilterQuery(selectedFilters);
-  const { mutateAsync: deleteStocks } = useStocksDelete();
+  const { mutateAsync: deleteStocks, isPending } = useStocksDelete();
 
   return (
     <div className="mt-10 mx-10">
@@ -34,35 +33,35 @@ const Stocks: FC = () => {
               placeholder="Процент скидки"
               options={filterOptions.discountPercentageOptions}
               fetchOptions={async () => {
-                setSelectedFilters(prev => ({ ...prev, city: null }));
+                setSelectedFilters(prev => ({ ...prev, discountPercentage: null }));
               }}
               value={selectedFilters.discountPercentage}
-              onChange={item => setSelectedFilters(prev => ({ ...prev, city: item }))}
+              onChange={item => setSelectedFilters(prev => ({ ...prev, discountPercentage: item }))}
             />
             <SelectAsync
               className="w-full"
               placeholder="Начало скидки"
               options={filterOptions.startDateoptions}
               fetchOptions={async () => {
-                setSelectedFilters(prev => ({ ...prev, position: null }));
+                setSelectedFilters(prev => ({ ...prev, startDate: null }));
               }}
               value={selectedFilters.startDate}
-              onChange={item => setSelectedFilters(prev => ({ ...prev, position: item }))}
+              onChange={item => setSelectedFilters(prev => ({ ...prev, startDate: item }))}
             />
             <SelectAsync
               className="w-full"
               placeholder="Конец скидки"
               options={filterOptions.endDateOptions}
               fetchOptions={async () => {
-                setSelectedFilters(prev => ({ ...prev, position: null }));
+                setSelectedFilters(prev => ({ ...prev, endDate: null }));
               }}
               value={selectedFilters.endDate}
-              onChange={item => setSelectedFilters(prev => ({ ...prev, position: item }))}
+              onChange={item => setSelectedFilters(prev => ({ ...prev, endDate: item }))}
             />
           </div>
         </div>
 
-        {isLoading ? (
+        {isLoading || isPending ? (
           <Center h="60vh">
             <Loader color="blue" />
           </Center>

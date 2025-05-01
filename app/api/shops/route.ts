@@ -46,6 +46,7 @@ export const GET = async (request: NextRequest) => {
       launchedDate: true,
       products: true,
       employees: true,
+      location: true,
     },
   });
 
@@ -67,13 +68,15 @@ export const POST = async (request: NextRequest) => {
   const newShop = await prisma.shop.create({
     data: {
       name: requestData.name,
-      address: requestData.address,
+      city: requestData.city,
       launchedDate: requestData.launchedDate,
       closedDate: requestData.closedDate,
       areaValue: requestData.areaValue,
       locationId: requestData.locationId ?? null,
       stocks: { connect: requestData.stocks },
       employees: { connect: requestData.employees },
+      suppliers: { connect: requestData.suppliers },
+      warehouses: { connect: requestData.warehouses },
     },
   });
 
