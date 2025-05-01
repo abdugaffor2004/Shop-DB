@@ -75,6 +75,8 @@ export const POST = async (request: NextRequest) => {
       locationId: requestData.locationId ?? null,
       stocks: { connect: requestData.stocks },
       employees: { connect: requestData.employees },
+      suppliers: { connect: requestData.suppliers },
+      warehouses: { connect: requestData.warehouses },
     },
   });
 

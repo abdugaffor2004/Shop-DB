@@ -99,9 +99,9 @@ const CreateShop: FC = () => {
             onChange={payload => {
               employeeHandlers.setState(payload);
 
-              const result = employees?.filter(item =>
-                payload.find(value => value.value === item.id),
-              );
+              const result = employees
+                ?.filter(item => payload.find(value => value.value === item.id))
+                .map(item => ({ id: item.id }));
 
               form.setFieldValue('employees', result || []);
             }}
@@ -142,9 +142,9 @@ const CreateShop: FC = () => {
             onChange={payload => {
               warehousesHandlers.setState(payload);
 
-              const result = warehouses?.filter(item =>
-                payload.find(value => value.value === item.id),
-              );
+              const result = warehouses
+                ?.filter(item => payload.find(value => value.value === item.id))
+                .map(item => ({ id: item.id }));
 
               form.setFieldValue('warehouses', result || []);
             }}
@@ -157,9 +157,9 @@ const CreateShop: FC = () => {
             onChange={payload => {
               suppliersHandlers.setState(payload);
 
-              const result = suppliers?.filter(item =>
-                payload.find(value => value.value === item.id),
-              );
+              const result = suppliers
+                ?.filter(item => payload.find(value => value.value === item.id))
+                .map(item => ({ id: item.id }));
 
               form.setFieldValue('suppliers', result || []);
             }}
