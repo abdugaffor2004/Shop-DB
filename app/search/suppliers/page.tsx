@@ -7,7 +7,6 @@ import { useSupplierFilterQuery } from './useSupplierFilterQuery';
 import { useSupplierDelete } from './useSupplierDelete';
 import SuppliersTable from '@/app/components/SuppliersTable/SupplierTable';
 
-
 interface SelectedFilters {
   city: Handbook | null;
   name: Handbook | null;
@@ -20,7 +19,7 @@ const Shops: FC = () => {
   });
 
   const { data, filterOptions, isLoading } = useSupplierFilterQuery(selectedFilters);
-  const { mutateAsync: deleteSupplier } = useSupplierDelete();
+  const { mutateAsync: deleteSupplier, isPending } = useSupplierDelete();
 
   return (
     <div className="mt-10 mx-10">
@@ -50,7 +49,7 @@ const Shops: FC = () => {
           </div>
         </div>
 
-        {isLoading ? (
+        {isLoading || isPending ? (
           <Center h="60vh">
             <Loader color="blue" />
           </Center>

@@ -22,6 +22,7 @@ const createSupplier = async (data: SupplierFormValues) => {
 };
 
 const CreateSupplier: FC = () => {
+  const [selectedShops, shopsHandlers] = useListState<Handbook>([]);
   const { data: shops, filterOptions: shopsFilterOptions } = useShopsFilterQuery();
 
   const form = useForm<SupplierFormValues>({
@@ -34,7 +35,7 @@ const CreateSupplier: FC = () => {
       city: '',
       region: '',
       country: '',
-      shop: [],
+      shops: [],
     },
     validate: {},
   });
@@ -42,9 +43,8 @@ const CreateSupplier: FC = () => {
   const handleSubmit = (formValues: SupplierFormValues) => {
     createSupplier(formValues);
     form.reset();
+    shopsHandlers.setState([]);
   };
-
-  const [selectedShops, shopsHandlers] = useListState<Handbook>([]);
 
   return (
     <form
@@ -105,14 +105,18 @@ const CreateSupplier: FC = () => {
         </Grid.Col>
         <Grid.Col>
           <MultiSelectAsync
-            placeholder="Магазин"
-            className="w-full flex-7/12"
+            placeholder="Магазины"
+            className="mt-5 w-full flex-7/12"
             options={shopsFilterOptions.nameOptions}
             value={selectedShops}
             onChange={payload => {
               shopsHandlers.setState(payload);
-              const result = shops?.filter(item => payload.find(value => value.value === item.id));
-              form.setFieldValue('shopId', result || []);
+
+              const result = shops
+                ?.filter(item => payload.find(value => value.value === item.id))
+                .map(item => ({ id: item.id }));
+
+              form.setFieldValue('shops', result || []);
             }}
           />
         </Grid.Col>

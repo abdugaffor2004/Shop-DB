@@ -18,21 +18,19 @@ export const GET = async (request: NextRequest) => {
     where.name = name;
   }
 
-  
-
   const suppliers = await prisma.supplier.findMany({
     where,
     select: {
-        id:true,
-        name:true,
-        phoneNumber:true,
-        email:true,
-        address:true,
-        city:true,
-        region:true,
-        country:true,
-        shops:true
-    }, 
+      id: true,
+      name: true,
+      phoneNumber: true,
+      email: true,
+      address: true,
+      city: true,
+      region: true,
+      country: true,
+      shops: true,
+    },
   });
 
   return NextResponse.json(suppliers, { status: 200 });
@@ -58,7 +56,7 @@ export const POST = async (request: NextRequest) => {
       city: requestData.city,
       region: requestData.region,
       country: requestData.country,
-
+      shops: { connect: requestData.shops },
     },
   });
 
