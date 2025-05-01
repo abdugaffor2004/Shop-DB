@@ -50,3 +50,20 @@ export const DELETE = async (request: NextRequest) => {
 
   return NextResponse.json({ message: 'Акция была успешно удалена' }, { status: 200 });
 };
+export const POST = async (request: NextRequest) => {
+  const requestData = await request.json();
+
+  const newStock = await prisma.stock.create({
+    data: {
+      title: requestData.title,
+      description: requestData.description,
+      startDate: requestData.startDate,
+      endDate: requestData.endDate,
+      discountPercentage: requestData.discountPercentage,
+      fixedDiscount: requestData.fixedDiscount,
+      
+    },
+  });
+
+  return NextResponse.json(newStock, { status: 200 });
+};
