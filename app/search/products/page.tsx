@@ -7,7 +7,6 @@ import { useProductsDelete } from './useProductsDelete';
 import { useProductsFilterQuery } from './useProductsFilterQuery';
 import ProductTable from '@/app/components/ProductsTable/ProductsTable';
 
-
 interface SelectedFilters {
   brand: Handbook | null;
   category: Handbook | null;
@@ -16,13 +15,13 @@ interface SelectedFilters {
 
 const Products: FC = () => {
   const [selectedFilters, setSelectedFilters] = useState<SelectedFilters>({
-    brand:null,
+    brand: null,
     category: null,
-    shop:null,
+    shop: null,
   });
 
   const { data, filterOptions, isLoading } = useProductsFilterQuery(selectedFilters);
-  const { mutateAsync: deleteProducts } = useProductsDelete();
+  const { mutateAsync: deleteProducts, isPending } = useProductsDelete();
 
   return (
     <div className="mt-10 mx-10">
@@ -49,20 +48,10 @@ const Products: FC = () => {
               value={selectedFilters.category}
               onChange={item => setSelectedFilters(prev => ({ ...prev, category: item }))}
             />
-            {/* <SelectAsync
-              className="w-full"
-              placeholder="Магазин"
-              options={filterOptions.shopOptions}
-              fetchOptions={async () => {
-                setSelectedFilters(prev => ({ ...prev, position: null }));
-              }}
-              value={selectedFilters.shop}
-              onChange={item => setSelectedFilters(prev => ({ ...prev, position: item }))}
-            /> */}
           </div>
         </div>
 
-        {isLoading ? (
+        {isLoading || isPending ? (
           <Center h="60vh">
             <Loader color="blue" />
           </Center>

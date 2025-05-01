@@ -20,12 +20,11 @@ const ProductTable: FC<ProductTableProps> = ({ data, withDelete, deleteRows }) =
   const rows = currentItems.map(item => (
     <Table.Tr key={item.id}>
       <Table.Td>{item.name}</Table.Td>
-      <Table.Td>{item.price}</Table.Td>
+      <Table.Td>{item.price} 000₽</Table.Td>
       <Table.Td>{item.brand}</Table.Td>
       <Table.Td>{item.weight} кг</Table.Td>
-      <Table.Td>{item.size}</Table.Td>
       <Table.Td>{item.color}</Table.Td>
-      <Table.Td>{item.quantityInWarehouse}</Table.Td>
+      <Table.Td>{item.quantityInWarehouse} шт.</Table.Td>
       {withDelete && isEditable && (
         <Table.Td p={10}>
           <ActionIcon color="red" variant="subtle" onClick={() => deleteRows?.(item.id)}>
@@ -52,7 +51,6 @@ const ProductTable: FC<ProductTableProps> = ({ data, withDelete, deleteRows }) =
           <Table.Th className="text-[16px] text-white ">Цена</Table.Th>
           <Table.Th className="text-[16px] text-white ">Бренд</Table.Th>
           <Table.Th className="text-[16px] text-white ">Вес</Table.Th>
-          <Table.Th className="text-[16px] text-white ">Размер</Table.Th>
           <Table.Th className="text-[16px] text-white ">Цвет</Table.Th>
           <Table.Th className="text-[16px] text-white ">Количество на складе</Table.Th>
           <Table.Th px={10} className="w-[40px]">
