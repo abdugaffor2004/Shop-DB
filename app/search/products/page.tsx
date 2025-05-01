@@ -33,10 +33,10 @@ const Products: FC = () => {
               placeholder="Бренд"
               options={filterOptions.brandOptions}
               fetchOptions={async () => {
-                setSelectedFilters(prev => ({ ...prev, city: null }));
+                setSelectedFilters(prev => ({ ...prev, brand: null }));
               }}
               value={selectedFilters.brand}
-              onChange={item => setSelectedFilters(prev => ({ ...prev, city: item }))}
+              onChange={item => setSelectedFilters(prev => ({ ...prev, brand: item }))}
             />
             <SelectAsync
               className="w-full"

@@ -9,48 +9,46 @@ export const GET = async (request: NextRequest) => {
   const category = searchParams.get('c');
   const shop = searchParams.get('s');
 
-
   const where: Prisma.ProductWhereInput = {};
 
   if (brand) {
-    where.brand = (brand);
+    where.brand = brand;
   }
 
   if (category) {
-    where.category= {
-        is: {
-          name: category,
-        },
-      };;
-  }
-  if (shop) {
-    where.shops={
-        some: {
-          name: shop,
-        },
-      };;
+    where.category = {
+      is: {
+        name: category,
+      },
+    };
   }
 
-  
+  if (shop) {
+    where.shops = {
+      some: {
+        name: shop,
+      },
+    };
+  }
 
   const products = await prisma.product.findMany({
     where,
     select: {
-        id:true,
-        name:true,
-        description:true,
-        price:true,
-        costPrice:true,
-        brand:true,
-        weight:true,
-        size:true,
-        color:true,
-        quantityInWarehouse:true,
-        isActive:true,
-        createdAt:true,
-        category:true,
-        shops:true
-    }, 
+      id: true,
+      name: true,
+      description: true,
+      price: true,
+      costPrice: true,
+      brand: true,
+      weight: true,
+      size: true,
+      color: true,
+      quantityInWarehouse: true,
+      isActive: true,
+      createdAt: true,
+      category: true,
+      shops: true,
+    },
   });
 
   return NextResponse.json(products, { status: 200 });
