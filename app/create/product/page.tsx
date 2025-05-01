@@ -10,9 +10,11 @@ import { useForm } from '@mantine/form';
 import { useShopsFilterQuery } from '@/app/search/shops/useShopsFilterQuery';
 import { useProductsFilterQuery } from '@/app/search/products/useProductsFilterQuery';
 import { getTodayDate } from './getTodayDate';
+import { useListState } from '@mantine/hooks';
+import { MultiSelectAsync } from '@/app/components/MultiSelectAsync';
 
 const createProduct = async (data: ProductFormValues) => {
-  const response = await axios.post(`/api/priducts`, data, {
+  const response = await axios.post(`/api/products`, data, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -22,26 +24,25 @@ const createProduct = async (data: ProductFormValues) => {
 
 const CreateShop: FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<Handbook | null>();
-  const [selectedShops, setSelectedShops] = useState<Handbook | null>();
+  const [selectedShops, shopsHandlers] = useListState<Handbook>([]);
   const [selectedBrand, setSelectedBrand] = useState<Handbook | null>();
-
 
   const form = useForm<ProductFormValues>({
     mode: 'controlled',
     initialValues: {
-        name: '',
-        description: '',
-        price: 0,
-        costPrice: 0,
-        brand: '',
-        weight: 0,
-        size: 0,
-        color: '',
-        quantityInWarehouse: 0,
-        isActive: true,
-        createdAt: getTodayDate(),
-        category: [],
-        shops: []
+      name: '',
+      description: '',
+      price: 0,
+      costPrice: 0,
+      brand: '',
+      weight: 0,
+      size: '',
+      color: '',
+      quantityInWarehouse: 0,
+      isActive: true,
+      createdAt: getTodayDate(),
+      categoryId: null,
+      shops: [],
     },
     validate: {},
   });
@@ -49,14 +50,10 @@ const CreateShop: FC = () => {
   const handleSubmit = (formValues: ProductFormValues) => {
     createProduct(formValues);
     form.reset();
-    // setSelectedLocation(null);
   };
   const { data: shops, filterOptions: shopsFilterOptions } = useShopsFilterQuery();
-  const { data: category, filterOptions: categoryFilterOptions } = useProductsFilterQuery();
-  const { data: brand, filterOptions: brandFilterOptions } = useProductsFilterQuery();
+  const { filterOptions: productFilterOptions } = useProductsFilterQuery();
 
-
-  
   return (
     <form
       onSubmit={form.onSubmit(values => handleSubmit(values))}
@@ -86,9 +83,9 @@ const CreateShop: FC = () => {
           </div>
           <SelectAsync
             placeholder="Категория"
-            label='Категория'
+            label="Категория"
             className="mt-5 w-full flex-7/12"
-            options={categoryFilterOptions.categoryOptions}
+            options={productFilterOptions.categoryOptions}
             value={selectedCategory || null}
             onChange={payload => {
               setSelectedCategory(payload);
@@ -103,18 +100,19 @@ const CreateShop: FC = () => {
           />
         </Grid.Col>
         <Grid.Col span={6}>
-          <SelectAsync
-            label = "Магазин"
-            placeholder="Магазин"
-            className="w-full flex-7/12 mb-5"
-            options={shops ? shops.map(shops => ({
-                value: shops.id,
-                label: shops.name,
-              })) : []}
-            value = {selectedShops || null}
+          <MultiSelectAsync
+            placeholder="Магазины"
+            className="mt-5 w-full flex-7/12"
+            options={shopsFilterOptions.nameOptions}
+            value={selectedShops}
             onChange={payload => {
-              setSelectedShops(payload);
-              form.setFieldValue('shopId', payload?.value || null);
+              shopsHandlers.setState(payload);
+
+              const result = shops
+                ?.filter(item => payload.find(value => value.value === item.id))
+                .map(item => ({ id: item.id }));
+
+              form.setFieldValue('shops', result || []);
             }}
           />
           <NumberInput
@@ -125,21 +123,21 @@ const CreateShop: FC = () => {
           />
           <SelectAsync
             placeholder="Бренд"
-            label='Бренд'
+            label="Бренд"
             className="mt-5 w-full flex-7/12"
-            options={brandFilterOptions.brandOptions}
+            options={productFilterOptions.brandOptions}
             value={selectedBrand || null}
             onChange={payload => {
               setSelectedBrand(payload);
-              form.setFieldValue('brand', payload?.value || '');
+              form.setFieldValue('brand', payload?.label || '');
             }}
           />
           <div className="flex gap-5">
-            <NumberInput
-                className="w-full mt-5"
-                label="Размер"
-                placeholder="Введите размер..."
-                {...form.getInputProps('size')}
+            <TextInput
+              className="w-full mt-5"
+              label="Размер"
+              placeholder="Введите размер..."
+              {...form.getInputProps('size')}
             />
             <NumberInput
               className="w-full mt-5"
@@ -150,12 +148,12 @@ const CreateShop: FC = () => {
           </div>
         </Grid.Col>
         <Grid.Col>
-            <TextInput
-                className="w-full"
-                label="Описание"
-                placeholder="Введите описание..."
-                {...form.getInputProps('description')}
-            />
+          <TextInput
+            className="w-full"
+            label="Описание"
+            placeholder="Введите описание..."
+            {...form.getInputProps('description')}
+          />
         </Grid.Col>
       </Grid>
 

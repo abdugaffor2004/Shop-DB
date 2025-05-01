@@ -31,7 +31,13 @@ export const useProductsFilterQuery = (searchParams?: ProductFilterSearchparams)
 
   const categoryOptions: Handbook[] =
     data
-      ?.map(products => ({ value: products.id, label: products.category.name }))
+      ?.map(product => {
+        if (!product.category) return { value: '', label: '' };
+        return {
+          value: product.category.id,
+          label: product.category.name,
+        };
+      })
       .filter((item, index, arr) => index === arr.findIndex(c => c.label === item.label)) ?? [];
 
   const nameOptions: Handbook[] =
@@ -39,16 +45,10 @@ export const useProductsFilterQuery = (searchParams?: ProductFilterSearchparams)
       ?.map(products => ({ value: products.id, label: products.name }))
       .filter((item, index, arr) => index === arr.findIndex(c => c.label === item.label)) ?? [];
 
-  // const shopOptions: Handbook[] =
-  //   data
-  // ?.map(products => ({ value: products.id, label: products.shop.name }))
-  // .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
-
   const productFilterOptions = {
     brandOptions,
     categoryOptions,
-    nameOptions
-    // shopOptions
+    nameOptions,
   };
 
   return { data, filterOptions: productFilterOptions, ...rest };

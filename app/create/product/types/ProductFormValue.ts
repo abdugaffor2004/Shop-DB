@@ -1,6 +1,3 @@
-import { Category } from '@/app/search/products/types/products'; 
-import { Shop } from '@/app/search/shops/types/Shop';
-
 export interface ProductFormValues {
   name: string;
   description: string;
@@ -8,11 +5,11 @@ export interface ProductFormValues {
   costPrice: number;
   brand: string;
   weight: number;
-  size: number;
+  size: string;
   color: string;
   quantityInWarehouse: number;
   isActive: boolean;
   createdAt: string;
-  category: Category[];
-  shops: Shop[];
+  categoryId: string | null;
+  shops: { id: string }[];
 }

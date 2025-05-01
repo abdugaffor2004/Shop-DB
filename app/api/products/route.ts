@@ -79,7 +79,7 @@ export const POST = async (request: NextRequest) => {
       color: requestData.color,
       isActive: requestData.isActive,
       createdAt: requestData.createdAt,
-      category: { connect: requestData.category },
+      categoryId: requestData.categoryId,
       shops: { connect: requestData.shops },
     },
   });
