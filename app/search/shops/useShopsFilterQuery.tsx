@@ -31,9 +31,11 @@ export const useShopsFilterQuery = (searchParams?: ShopsFilterSearchparams) => {
       ?.map(shop => ({ value: shop.id, label: shop.city }))
       .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
       const nameOptions: Handbook[] =
+
       data
         ?.map(shop => ({ value: shop.id, label: shop.name}))
         .filter((item, index, arr) => index === arr.findIndex(s => s.label === item.label)) ?? [];
+
   const launchedDateOptions: Handbook[] =
     data
       ?.map(shop => ({
@@ -60,6 +62,7 @@ export const useShopsFilterQuery = (searchParams?: ShopsFilterSearchparams) => {
     cityOptions,
     launchedDateOptions,
     closedDateOptions,
+    nameOptions,
     positionOptions,
     nameOptions
   };
