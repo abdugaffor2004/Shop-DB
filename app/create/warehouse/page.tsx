@@ -10,6 +10,7 @@ import { useShopsFilterQuery } from '@/app/search/shops/useShopsFilterQuery';
 import { Handbook } from '@/app/types/Handbook';
 import { useListState } from '@mantine/hooks';
 import { useProductsFilterQuery } from '@/app/search/products/useProductsFilterQuery';
+import { DateInput } from '@mantine/dates';
 
 const createWarehouse = async (data: WarehouseFormValues) => {
   const response = await axios.post(`/api/warehouses`, data, {
@@ -57,7 +58,7 @@ const CreateWarehouse: FC = () => {
           {...form.getInputProps('name')}
         />
         <Flex gap={20}>
-          <TextInput
+          <DateInput
             className="w-full mt-5"
             label="Дата последнего пополнения"
             placeholder="Введите дату..."

@@ -13,6 +13,7 @@
   "dependencies": {
     "@faker-js/faker": "^9.7.0",
     "@mantine/core": "^7.17.5",
+    "@mantine/dates": "^7.17.7",
     "@mantine/form": "^7.17.5",
     "@mantine/hooks": "^7.17.5",
     "@prisma/client": "^6.6.0",
