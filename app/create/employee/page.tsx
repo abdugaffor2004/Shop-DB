@@ -11,6 +11,7 @@ import { useForm } from '@mantine/form';
 import { EmployeeFormValues } from './types/EmployeeFormValue';
 import { useShopsFilterQuery } from '@/app/search/shops/useShopsFilterQuery';
 import { useEmployeesFilterQuery } from '@/app/search/employees/useEmployeesFilterQuery';
+import { DateInput } from '@mantine/dates'
 
 const createEmployee = async (data: EmployeeFormValues) => {
   const response = await axios.post(`/api/employees`, data, {
@@ -62,13 +63,13 @@ const CreateEmployee: FC = () => {
             {...form.getInputProps('firstName')}
           />
 
-          <TextInput
+          <DateInput
             className="w-full mt-5"
             label="Дата приема"
             placeholder="Введите дату приема..."
             {...form.getInputProps('acceptDate')}
           />
-          <TextInput
+          <DateInput
             className="w-full mt-5"
             label="Дата увольнения"
             placeholder="Введите дату увольнения..."

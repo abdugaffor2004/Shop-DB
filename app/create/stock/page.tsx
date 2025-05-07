@@ -11,6 +11,7 @@ import { useListState } from '@mantine/hooks';
 import { MultiSelectAsync } from '@/app/components/MultiSelectAsync';
 import { StockFormValues } from './types/StockFormValue';
 import { useShopsFilterQuery } from '@/app/search/shops/useShopsFilterQuery';
+import { DateInput } from '@mantine/dates';
 
 const createShop = async (data: StockFormValues) => {
   const response = await axios.post(`/api/stocks`, data, {
@@ -59,13 +60,13 @@ const CreateShop: FC = () => {
             {...form.getInputProps('title')}
           />
 
-          <TextInput
+          <DateInput
             className="w-full mt-5"
             label="Дата начала"
             placeholder="Введите дату..."
             {...form.getInputProps('startDate')}
           />
-          <TextInput
+          <DateInput
             className="w-full mt-5"
             label="Дата конца"
             placeholder="Введите дату..."

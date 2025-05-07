@@ -15,6 +15,7 @@ import { MultiSelectAsync } from '@/app/components/MultiSelectAsync';
 import { useSupplierFilterQuery } from '@/app/search/suppliers/useSupplierFilterQuery';
 import { useLocationFilterQuery } from '@/app/search/location/useLocationFIlterQuery';
 import { useWarehouseFilterQuery } from '@/app/search/warehouses/useWarehousesFilterQuery';
+import { DateInput } from '@mantine/dates';
 
 const createShop = async (data: ShopFormValues) => {
   const response = await axios.post(`/api/shops`, data, {
@@ -78,13 +79,13 @@ const CreateShop: FC = () => {
           />
 
           <div className="flex gap-5">
-            <TextInput
+            <DateInput
               className="w-full mt-5"
               label="Дата открытия"
               placeholder="Введите дату..."
               {...form.getInputProps('launchedDate')}
             />
-            <TextInput
+            <DateInput
               className="w-full mt-5"
               label="Дата закрытия"
               placeholder="Введите дату..."
