@@ -24,4 +24,3 @@ html body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
-@import '@mantine/dates/styles.css';

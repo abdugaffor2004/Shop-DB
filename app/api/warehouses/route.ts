@@ -26,7 +26,7 @@ export const GET = async (request: NextRequest) => {
   if (lastDepositDate) {
     where.lastDepositDate = lastDepositDate;
   }
-  
+
   const warehouses = await prisma.warehouse.findMany({
     where,
     select: {
@@ -55,10 +55,12 @@ export const DELETE = async (request: NextRequest) => {
 export const POST = async (request: NextRequest) => {
   const requestData = await request.json();
 
+  const lastDepositDate = new Date(requestData.lastDepositDate).toLocaleDateString('ru');
+
   const newWarehouse = await prisma.warehouse.create({
     data: {
       name: requestData.name,
-      lastDepositDate: requestData.lastDepositDate,
+      lastDepositDate,
       size: requestData.size,
       products: { connect: requestData.products },
       shops: { connect: requestData.shops },

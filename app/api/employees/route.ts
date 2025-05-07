@@ -53,14 +53,16 @@ export const DELETE = async (request: NextRequest) => {
 
 export const POST = async (request: NextRequest) => {
   const requestData = await request.json();
+  const terminationDate = new Date(requestData.terminationDate).toLocaleDateString('ru');
+  const acceptDate = new Date(requestData.acceptDate).toLocaleDateString('ru');
 
   const newEmployee = await prisma.employee.create({
     data: {
       firstName: requestData.firstName,
       lastName: requestData.lastName,
       position: requestData.position,
-      acceptDate: requestData.acceptDate,
-      terminationDate: requestData.terminationDate,
+      acceptDate,
+      terminationDate,
       email: requestData.email,
       phoneNumber: requestData.phoneNumber,
       shopId: requestData.shopId,

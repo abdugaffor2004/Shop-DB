@@ -9,7 +9,6 @@ export const GET = async (request: NextRequest) => {
   const startDate = searchParams.get('sd');
   const endDate = searchParams.get('ed');
 
-
   const where: Prisma.StockWhereInput = {};
 
   if (discountPercentage) {
@@ -23,20 +22,18 @@ export const GET = async (request: NextRequest) => {
     where.endDate = endDate;
   }
 
-  
-
   const stocks = await prisma.stock.findMany({
     where,
     select: {
-        id:true,
-        title:true,
-        description:true,
-        startDate:true,
-        endDate:true,
-        discountPercentage:true,
-        fixedDiscount:true,
-        shops:true
-    }, 
+      id: true,
+      title: true,
+      description: true,
+      startDate: true,
+      endDate: true,
+      discountPercentage: true,
+      fixedDiscount: true,
+      shops: true,
+    },
   });
 
   return NextResponse.json(stocks, { status: 200 });
@@ -52,16 +49,18 @@ export const DELETE = async (request: NextRequest) => {
 };
 export const POST = async (request: NextRequest) => {
   const requestData = await request.json();
+  const startDate = new Date(requestData.startDate).toLocaleDateString('ru');
+  const endDate = new Date(requestData.endDate).toLocaleDateString('ru');
 
   const newStock = await prisma.stock.create({
     data: {
       title: requestData.title,
       description: requestData.description,
-      startDate: requestData.startDate,
-      endDate: requestData.endDate,
+      startDate,
+      endDate,
       discountPercentage: requestData.discountPercentage,
       fixedDiscount: requestData.fixedDiscount,
-      shops: {connect:requestData.shops}
+      shops: { connect: requestData.shops },
     },
   });
 
