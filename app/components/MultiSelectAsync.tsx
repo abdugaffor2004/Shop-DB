@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckIcon, Combobox, Loader, ScrollArea, TextInput, useCombobox } from '@mantine/core';
+import { CheckIcon, Combobox, Loader, ScrollArea, Textarea, useCombobox } from '@mantine/core';
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
 import React, { FC, useState } from 'react';
 import classes from '../components/SelectAsync/SelectAsync.module.css';
@@ -57,12 +57,11 @@ export const MultiSelectAsync: FC<MultiSelectAsyncProps> = ({
   return (
     <Combobox store={combobox} withinPortal={false} onOptionSubmit={handleOptionSelect}>
       <Combobox.Target>
-        <TextInput
+        <Textarea
           {...rest}
           disabled={disabled}
           className={`${className}`}
           component="button"
-          type="button"
           pointer
           onClick={() => combobox.toggleDropdown()}
           rightSectionPointerEvents="none"
@@ -77,7 +76,7 @@ export const MultiSelectAsync: FC<MultiSelectAsyncProps> = ({
           }
         >
           <span className={value.length ? 'text-black' : 'text-gray-400'}>{displayValue}</span>
-        </TextInput>
+        </Textarea>
       </Combobox.Target>
 
       <Combobox.Dropdown classNames={{ dropdown: classes.selectDropdown }}>
