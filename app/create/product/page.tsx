@@ -57,7 +57,7 @@ const CreateShop: FC = () => {
   return (
     <form
       onSubmit={form.onSubmit(values => handleSubmit(values))}
-      className="h-[64vh] mt-10 mx-100 p-10   bg-white rounded-lg"
+      className="h-[70vh] mt-10 mx-100 p-10   bg-white rounded-lg"
     >
       <Grid>
         <Grid.Col span={6}>
@@ -70,13 +70,13 @@ const CreateShop: FC = () => {
           <div className="flex gap-5">
             <NumberInput
               className="w-full mt-5"
-              label="Стоимость"
+              label="Стоимость, руб"
               placeholder="Введите Стоимость..."
               {...form.getInputProps('price')}
             />
             <NumberInput
               className="w-full mt-5"
-              label="Себестоимость"
+              label="Себестоимость, руб"
               placeholder="Введите себестоимость..."
               {...form.getInputProps('costPrice')}
             />
@@ -102,7 +102,7 @@ const CreateShop: FC = () => {
         <Grid.Col span={6}>
           <MultiSelectAsync
             placeholder="Магазины"
-            className="mt-5 w-full flex-7/12"
+            className="mt-6 w-full flex-7/12"
             options={shopsFilterOptions.nameOptions}
             value={selectedShops}
             onChange={payload => {
@@ -115,12 +115,21 @@ const CreateShop: FC = () => {
               form.setFieldValue('shops', result || []);
             }}
           />
-          <NumberInput
+           <div className="flex gap-5">
+           <NumberInput
             className="w-full mt-5"
-            label="Количесиво на складе"
-            placeholder="Введите количесиво..."
+            label="Количество на складе"
+            placeholder="Введите количество..."
             {...form.getInputProps('quantityInWarehouse')}
           />
+            <NumberInput
+              className="w-full mt-5"
+              label="Вес в кг"
+              placeholder="Введите вес..."
+              {...form.getInputProps('weight')}
+            />
+          </div>
+          
           <SelectAsync
             placeholder="Бренд"
             label="Бренд"
@@ -136,15 +145,10 @@ const CreateShop: FC = () => {
             <TextInput
               className="w-full mt-5"
               label="Размер"
-              placeholder="Введите размер..."
+              placeholder="Введите размер в см..."
               {...form.getInputProps('size')}
             />
-            <NumberInput
-              className="w-full mt-5"
-              label="Вес"
-              placeholder="Введите вес..."
-              {...form.getInputProps('weight')}
-            />
+            
           </div>
         </Grid.Col>
         <Grid.Col>

@@ -86,8 +86,8 @@ const CreateEmployee: FC = () => {
           <div className="flex-col gap-5">
             <TextInput
               className="w-full mt-5"
-              label="email"
-              placeholder="Введите email..."
+              label="Введите email"
+              placeholder="example@gmail.com"
               {...form.getInputProps('email')}
             />
 

@@ -118,8 +118,8 @@ const CreateShop: FC = () => {
 
           <NumberInput
             className="w-full mt-5"
-            label="Площадь"
-            placeholder="Введите площадь..."
+            label="Площадь в м^3"
+            placeholder="Введите площадь в м^3..."
             {...form.getInputProps('areaValue')}
           />
 
