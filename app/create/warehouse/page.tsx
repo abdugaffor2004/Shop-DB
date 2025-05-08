@@ -68,7 +68,7 @@ const CreateWarehouse: FC = () => {
           <NumberInput
             className="w-full mt-5"
             label="Размер"
-            placeholder="Введите размер..."
+            placeholder="Введите размер в м^3..."
             {...form.getInputProps('size')}
           />
         </Flex>

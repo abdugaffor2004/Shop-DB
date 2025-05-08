@@ -62,8 +62,8 @@ const CreateSupplier: FC = () => {
 
           <TextInput
             className="w-full mt-5"
-            label="email"
-            placeholder="Введите email..."
+            label="Введите email"
+            placeholder="example@google.com"
             {...form.getInputProps('email')}
           />
 
