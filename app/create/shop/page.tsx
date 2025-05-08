@@ -8,7 +8,7 @@ import React, { FC, useState } from 'react';
 import axios from 'axios';
 import { ShopFormValues } from './types/ShopFormValue';
 import { Handbook } from '@/app/types/Handbook';
-import { useForm } from '@mantine/form';
+import { isNotEmpty, useForm } from '@mantine/form';
 import { useEmployeesFilterQuery } from '@/app/search/employees/useEmployeesFilterQuery';
 import { useListState } from '@mantine/hooks';
 import { MultiSelectAsync } from '@/app/components/MultiSelectAsync';
@@ -47,7 +47,7 @@ const CreateShop: FC = () => {
       suppliers: [],
       warehouses: [],
     },
-    validate: {},
+    validate: { locationId: isNotEmpty() },
   });
 
   const handleSubmit = (formValues: ShopFormValues) => {
