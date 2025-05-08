@@ -11,7 +11,7 @@ import { useForm } from '@mantine/form';
 import { EmployeeFormValues } from './types/EmployeeFormValue';
 import { useShopsFilterQuery } from '@/app/search/shops/useShopsFilterQuery';
 import { useEmployeesFilterQuery } from '@/app/search/employees/useEmployeesFilterQuery';
-import { DateInput } from '@mantine/dates'
+import { DateInput } from '@mantine/dates';
 
 const createEmployee = async (data: EmployeeFormValues) => {
   const response = await axios.post(`/api/employees`, data, {
@@ -52,7 +52,7 @@ const CreateEmployee: FC = () => {
   return (
     <form
       onSubmit={form.onSubmit(values => handleSubmit(values))}
-      className="h-[64vh] mt-10 mx-100 p-10   bg-white rounded-lg"
+      className="h-[68vh] mt-10 mx-100 p-10   bg-white rounded-lg"
     >
       <Grid>
         <Grid.Col span={6}>

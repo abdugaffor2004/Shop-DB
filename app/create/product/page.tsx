@@ -57,7 +57,7 @@ const CreateShop: FC = () => {
   return (
     <form
       onSubmit={form.onSubmit(values => handleSubmit(values))}
-      className="h-[70vh] mt-10 mx-100 p-10   bg-white rounded-lg"
+      className="h-[74vh] mt-10 mx-100 p-10 bg-white rounded-lg"
     >
       <Grid>
         <Grid.Col span={6}>
@@ -70,13 +70,17 @@ const CreateShop: FC = () => {
           <div className="flex gap-5">
             <NumberInput
               className="w-full mt-5"
-              label="Стоимость, руб"
+              label="Стоимость"
+              allowNegative={false}
+              suffix=" ₽"
               placeholder="Введите Стоимость..."
               {...form.getInputProps('price')}
             />
             <NumberInput
               className="w-full mt-5"
-              label="Себестоимость, руб"
+              label="Себестоимость"
+              allowNegative={false}
+              suffix=" ₽"
               placeholder="Введите себестоимость..."
               {...form.getInputProps('costPrice')}
             />
@@ -115,21 +119,25 @@ const CreateShop: FC = () => {
               form.setFieldValue('shops', result || []);
             }}
           />
-           <div className="flex gap-5">
-           <NumberInput
-            className="w-full mt-5"
-            label="Количество на складе"
-            placeholder="Введите количество..."
-            {...form.getInputProps('quantityInWarehouse')}
-          />
+          <div className="flex gap-5">
+            <NumberInput
+              className="w-full mt-5"
+              label="Количество на складе"
+              allowNegative={false}
+              suffix=" единиц"
+              placeholder="Введите количество..."
+              {...form.getInputProps('quantityInWarehouse')}
+            />
             <NumberInput
               className="w-full mt-5"
               label="Вес в кг"
+              allowNegative={false}
+              suffix=" кг"
               placeholder="Введите вес..."
               {...form.getInputProps('weight')}
             />
           </div>
-          
+
           <SelectAsync
             placeholder="Бренд"
             label="Бренд"
@@ -148,7 +156,6 @@ const CreateShop: FC = () => {
               placeholder="Введите размер в см..."
               {...form.getInputProps('size')}
             />
-            
           </div>
         </Grid.Col>
         <Grid.Col>

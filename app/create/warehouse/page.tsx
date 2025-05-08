@@ -68,6 +68,8 @@ const CreateWarehouse: FC = () => {
           <NumberInput
             className="w-full mt-5"
             label="Размер"
+            allowNegative={false}
+            suffix=" единиц"
             placeholder="Введите размер в м^3..."
             {...form.getInputProps('size')}
           />

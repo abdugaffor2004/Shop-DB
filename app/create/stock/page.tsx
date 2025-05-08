@@ -84,6 +84,8 @@ const CreateShop: FC = () => {
           <NumberInput
             className="w-full mt-5"
             label="Процент скидки"
+            allowNegative={false}
+            suffix=" %"
             placeholder="Введите процент скидки..."
             {...form.getInputProps('discountPercentage')}
           />
@@ -91,6 +93,8 @@ const CreateShop: FC = () => {
           <NumberInput
             className="w-full mt-5"
             label="Фиксированная скидка в рублях"
+            allowNegative={false}
+            suffix=" ₽"
             placeholder="Введите фиксированную скидку..."
             {...form.getInputProps('fixedDiscount')}
           />
