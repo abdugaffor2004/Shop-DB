@@ -20,7 +20,7 @@ const Employees: FC = () => {
     terminationDate: null,
   });
 
-  const { data, filterOptions, isLoading } = useEmployeesFilterQuery(selectedFilters);
+  const { data, filterOptions, isFetching } = useEmployeesFilterQuery(selectedFilters);
   const { mutateAsync: deleteEmployee, isPending } = useEmployeeDelete();
 
   return (
@@ -65,7 +65,7 @@ const Employees: FC = () => {
           </div>
         </div>
 
-        {isLoading || isPending ? (
+        {isFetching || isPending ? (
           <Center h="60vh">
             <Loader color="blue" />
           </Center>

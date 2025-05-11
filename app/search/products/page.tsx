@@ -20,7 +20,7 @@ const Products: FC = () => {
     shop: null,
   });
 
-  const { data, filterOptions, isLoading } = useProductsFilterQuery(selectedFilters);
+  const { data, filterOptions, isFetching } = useProductsFilterQuery(selectedFilters);
   const { mutateAsync: deleteProducts, isPending } = useProductsDelete();
 
   return (
@@ -51,7 +51,7 @@ const Products: FC = () => {
           </div>
         </div>
 
-        {isLoading || isPending ? (
+        {isFetching || isPending ? (
           <Center h="60vh">
             <Loader color="blue" />
           </Center>

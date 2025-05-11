@@ -20,7 +20,7 @@ const Warehouses: FC = () => {
     lastDepositDate: null,
   });
 
-  const { data, filterOptions, isLoading } = useWarehouseFilterQuery(selectedFilters);
+  const { data, filterOptions, isFetching } = useWarehouseFilterQuery(selectedFilters);
   const { mutateAsync: deleteWarehouses } = useWarehousesDelete();
 
   return (
@@ -61,7 +61,7 @@ const Warehouses: FC = () => {
           </div>
         </div>
 
-        {isLoading ? (
+        {isFetching ? (
           <Center h="60vh">
             <Loader color="blue" />
           </Center>
