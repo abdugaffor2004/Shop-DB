@@ -1,6 +1,5 @@
 'use client';
 import { Box, Center, Flex, Loader, Text } from '@mantine/core';
-import ShopCountByCityTable from './components/ShopCountByCityTable/ShopCountByCityTable';
 import { useStatistics } from './useStatistics';
 import ShopCountByLocationTable from './components/ShopCountByLocationTable/ShopCountByLocationTable';
 import {
@@ -16,7 +15,7 @@ export default function Home() {
   return (
     <main className="mx-20">
       <div className="flex gap-10  mt-10">
-        <Box className="w-full px-10 py-6 bg-white rounded-xl h-fit">
+        {/* <Box className="w-full px-10 py-6 bg-white rounded-xl h-fit">
           <Text fw="bold" fz={18}>
             Количество магазинов по городам
           </Text>
@@ -27,7 +26,7 @@ export default function Home() {
           ) : (
             <ShopCountByCityTable data={statistics?.shopCountByCity || []} />
           )}
-        </Box>
+        </Box> */}
 
         <Box className="w-full px-10 py-6 bg-white rounded-xl h-fit">
           <Text fw="bold" fz={18}>
