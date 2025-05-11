@@ -21,8 +21,8 @@ const ShopsTable: FC<ShopsTableProps> = ({ data, withDelete, deleteRows }) => {
   const rows = currentItems.map(item => (
     <Table.Tr key={item.id}>
       <Table.Td>{item.name}</Table.Td>
-      <Table.Td>{item.launchedDate}</Table.Td>
-      <Table.Td>{item.closedDate ?? '-'}</Table.Td>
+      <Table.Td>{item.launchedDate ? item.launchedDate : '-'}</Table.Td>
+      <Table.Td>{item.closedDate ? item.closedDate : '-'}</Table.Td>
       <Table.Td>{item.city}</Table.Td>
       <Table.Td>{item.location.region}</Table.Td>
       <Table.Td>{item.areaValue.toFixed()}</Table.Td>

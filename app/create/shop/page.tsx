@@ -60,9 +60,17 @@ const CreateShop: FC = () => {
   };
 
   const { data: employees, filterOptions: employeeFilterOptions } = useEmployeesFilterQuery();
-  const { data: suppliers, filterOptions: suppliersFilterOptions } = useSupplierFilterQuery();
+  const {
+    data: suppliers,
+    filterOptions: suppliersFilterOptions,
+    isLoading: isSupplierLoading,
+  } = useSupplierFilterQuery();
   const { filterOptions: locationFilterOptions } = useLocationFilterQuery();
-  const { data: warehouses, filterOptions: warehousesFilterOptions } = useWarehouseFilterQuery();
+  const {
+    data: warehouses,
+    filterOptions: warehousesFilterOptions,
+    isLoading: isWarehouseLoading,
+  } = useWarehouseFilterQuery();
 
   return (
     <form
@@ -137,6 +145,7 @@ const CreateShop: FC = () => {
         </Grid.Col>
         <Grid.Col>
           <MultiSelectAsync
+            disabled={isWarehouseLoading}
             placeholder="Склад"
             className="mt-2 w-full flex-7/12"
             options={warehousesFilterOptions.nameOptions}
@@ -152,6 +161,7 @@ const CreateShop: FC = () => {
             }}
           />
           <MultiSelectAsync
+            disabled={isSupplierLoading}
             placeholder="Поставщик"
             className="mt-5 w-full flex-7/12"
             options={suppliersFilterOptions.nameOptions}

@@ -10,7 +10,7 @@ import {
 } from '@tabler/icons-react';
 
 export default function Home() {
-  const { data: statistics, isLoading } = useStatistics();
+  const { data: statistics, isFetching } = useStatistics();
 
   return (
     <main className="mx-20">
@@ -19,7 +19,7 @@ export default function Home() {
           <Text fw="bold" fz={18}>
             Количество магазинов по городам
           </Text>
-          {isLoading ? (
+          {isFetching ? (
             <Center h="20vh">
               <Loader color="blue" />
             </Center>
@@ -32,7 +32,7 @@ export default function Home() {
           <Text fw="bold" fz={18}>
             Количество магазинов по областям
           </Text>
-          {isLoading ? (
+          {isFetching ? (
             <Center h="20vh">
               <Loader color="blue" />
             </Center>
@@ -51,7 +51,7 @@ export default function Home() {
             <IconShoppingBag color="#008be6" size={32} />
           </Flex>
 
-          {isLoading ? (
+          {isFetching ? (
             <Center h="20vh">
               <Loader color="blue" />
             </Center>
@@ -70,7 +70,7 @@ export default function Home() {
             <IconBuildingWarehouse color="#008be6" size={32} />
           </Flex>
 
-          {isLoading ? (
+          {isFetching ? (
             <Center h="20vh">
               <Loader color="blue" />
             </Center>
@@ -89,7 +89,7 @@ export default function Home() {
             <IconPointerDollar color="#008be6" size={32} />
           </Flex>
 
-          {isLoading ? (
+          {isFetching ? (
             <Center h="20vh">
               <Loader color="blue" />
             </Center>
@@ -108,7 +108,7 @@ export default function Home() {
             <IconUserFilled color="#008be6" size={32} />
           </Flex>
 
-          {isLoading ? (
+          {isFetching ? (
             <Center h="20vh">
               <Loader color="blue" />
             </Center>

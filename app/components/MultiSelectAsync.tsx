@@ -60,8 +60,8 @@ export const MultiSelectAsync: FC<MultiSelectAsyncProps> = ({
         <Textarea
           {...rest}
           disabled={disabled}
-          className={`${className}`}
-          component="button"
+          className={className}
+          component=""
           pointer
           onClick={() => combobox.toggleDropdown()}
           rightSectionPointerEvents="none"

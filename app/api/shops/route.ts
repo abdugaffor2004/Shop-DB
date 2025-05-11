@@ -64,8 +64,13 @@ export const DELETE = async (request: NextRequest) => {
 
 export const POST = async (request: NextRequest) => {
   const requestData = await request.json();
-  const closedDate = new Date(requestData.closedDate).toLocaleDateString('ru');
-  const launchedDate = new Date(requestData.launchedDate).toLocaleDateString('ru');
+  const closedDate = requestData.closedDate
+    ? new Date(requestData.closedDate).toLocaleDateString('ru')
+    : '';
+
+  const launchedDate = requestData.launchedDate
+    ? new Date(requestData.launchedDate).toLocaleDateString('ru')
+    : '';
 
   const newShop = await prisma.shop.create({
     data: {
