@@ -54,7 +54,7 @@ const Shops: FC = () => {
               }}
             />
 
-            <SelectAsync
+            {/* <SelectAsync
               className="w-full"
               placeholder="Дата закрытия"
               options={filterOptions.cityOptions}
@@ -63,7 +63,7 @@ const Shops: FC = () => {
               }}
               value={selectedFilters.closedDate}
               onChange={item => setSelectedFilters(prev => ({ ...prev, closedDate: item }))}
-            />
+            /> */}
 
             <SelectAsync
               className="w-full"

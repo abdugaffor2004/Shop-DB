@@ -52,7 +52,7 @@ const Employees: FC = () => {
               }}
             />
 
-            <SelectAsync
+            {/* <SelectAsync
               className="w-full"
               placeholder="Дата увольнения"
               options={filterOptions.terminationDateOptions}
@@ -61,7 +61,7 @@ const Employees: FC = () => {
               }}
               value={selectedFilters.terminationDate}
               onChange={item => setSelectedFilters(prev => ({ ...prev, terminationDate: item }))}
-            />
+            /> */}
           </div>
         </div>
 
