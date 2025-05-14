@@ -10,7 +10,7 @@ import { useForm } from '@mantine/form';
 import { useShopsFilterQuery } from '@/app/search/shops/useShopsFilterQuery';
 import { useProductsFilterQuery } from '@/app/search/products/useProductsFilterQuery';
 import { getTodayDate } from './getTodayDate';
-import { useListState } from '@mantine/hooks';
+import { useListState, useToggle } from '@mantine/hooks';
 import { MultiSelectAsync } from '@/app/components/MultiSelectAsync';
 
 const createProduct = async (data: ProductFormValues) => {
@@ -26,6 +26,9 @@ const CreateShop: FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<Handbook | null>();
   const [selectedShops, shopsHandlers] = useListState<Handbook>([]);
   const [selectedBrand, setSelectedBrand] = useState<Handbook | null>();
+
+  const [isBrandEditable, setIsBrandEditable] = useToggle();
+  const [isCategoryEditable, setIsCategoryEditable] = useToggle();
 
   const form = useForm<ProductFormValues>({
     mode: 'controlled',
@@ -43,6 +46,10 @@ const CreateShop: FC = () => {
       createdAt: getTodayDate(),
       categoryId: null,
       shops: [],
+      category: {
+        name: '',
+        description: '',
+      },
     },
     validate: {},
   });
@@ -85,17 +92,33 @@ const CreateShop: FC = () => {
               {...form.getInputProps('costPrice')}
             />
           </div>
-          <SelectAsync
-            placeholder="Категория"
-            label="Категория"
-            className="mt-5 w-full flex-7/12"
-            options={productFilterOptions.categoryOptions}
-            value={selectedCategory || null}
-            onChange={payload => {
-              setSelectedCategory(payload);
-              form.setFieldValue('categoryId', payload?.value || null);
-            }}
-          />
+
+          <div className="mt-5 flex items-center gap-3">
+            {isCategoryEditable ? (
+              <TextInput
+                className="w-full flex-9/12"
+                placeholder="Введите категорию"
+                label="Категория"
+                onChange={e => form.setFieldValue('category.name', e.currentTarget.value)}
+              />
+            ) : (
+              <SelectAsync
+                placeholder="Категория"
+                label="Категория"
+                className=" w-full flex-7/12"
+                options={productFilterOptions.categoryOptions}
+                value={selectedCategory || null}
+                onChange={payload => {
+                  setSelectedCategory(payload);
+                  form.setFieldValue('categoryId', payload?.value || null);
+                }}
+              />
+            )}
+
+            <Button className="mt-5" onClick={() => setIsCategoryEditable()} fz={12} px={7}>
+              {isCategoryEditable ? 'Выбрать' : 'Добавить'}
+            </Button>
+          </div>
           <TextInput
             className="w-full mt-5"
             label="Цвет"
@@ -138,25 +161,39 @@ const CreateShop: FC = () => {
             />
           </div>
 
-          <SelectAsync
-            placeholder="Бренд"
-            label="Бренд"
-            className="mt-5 w-full flex-7/12"
-            options={productFilterOptions.brandOptions}
-            value={selectedBrand || null}
-            onChange={payload => {
-              setSelectedBrand(payload);
-              form.setFieldValue('brand', payload?.label || '');
-            }}
-          />
-          <div className="flex gap-5">
-            <TextInput
-              className="w-full mt-5"
-              label="Размер"
-              placeholder="Введите размер в см..."
-              {...form.getInputProps('size')}
-            />
+          <div className="mt-5 flex items-center gap-3">
+            {isBrandEditable ? (
+              <TextInput
+                className="w-full flex-9/12"
+                placeholder="Введите брэнд"
+                label="Бренд"
+                onChange={e => form.setFieldValue('brand', e.currentTarget.value)}
+              />
+            ) : (
+              <SelectAsync
+                placeholder="Бренд"
+                label="Бренд"
+                className=" w-full flex-7/12"
+                options={productFilterOptions.brandOptions}
+                value={selectedBrand || null}
+                onChange={payload => {
+                  setSelectedBrand(payload);
+                  form.setFieldValue('brand', payload?.label || '');
+                }}
+              />
+            )}
+
+            <Button className="mt-5" onClick={() => setIsBrandEditable()} fz={12} px={7}>
+              {isBrandEditable ? 'Выбрать' : 'Добавить'}
+            </Button>
           </div>
+
+          <TextInput
+            className="w-full mt-5"
+            label="Размер"
+            placeholder="Введите размер в см..."
+            {...form.getInputProps('size')}
+          />
         </Grid.Col>
         <Grid.Col>
           <TextInput

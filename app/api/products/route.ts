@@ -79,8 +79,15 @@ export const POST = async (request: NextRequest) => {
       color: requestData.color,
       isActive: requestData.isActive,
       createdAt: requestData.createdAt,
-      categoryId: requestData.categoryId,
       shops: { connect: requestData.shops },
+      category: requestData.categoryId
+        ? { connect: { id: requestData.categoryId } }
+        : {
+            create: {
+              name: requestData.category.name,
+              description: requestData.category.description,
+            },
+          },
     },
   });
   return NextResponse.json(newProduct, { status: 200 });

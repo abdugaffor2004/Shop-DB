@@ -1,3 +1,5 @@
+import { Category } from '@/app/search/products/types/products';
+
 export interface ProductFormValues {
   name: string;
   description: string;
@@ -12,4 +14,6 @@ export interface ProductFormValues {
   createdAt: string;
   categoryId: string | null;
   shops: { id: string }[];
+
+  category: Omit<Category, 'id'>;
 }
