@@ -12,6 +12,7 @@ import { EmployeeFormValues } from './types/EmployeeFormValue';
 import { useShopsFilterQuery } from '@/app/search/shops/useShopsFilterQuery';
 import { useEmployeesFilterQuery } from '@/app/search/employees/useEmployeesFilterQuery';
 import { DateInput } from '@mantine/dates';
+import { useToggle } from '@mantine/hooks';
 
 const createEmployee = async (data: EmployeeFormValues) => {
   const response = await axios.post(`/api/employees`, data, {
@@ -25,6 +26,8 @@ const createEmployee = async (data: EmployeeFormValues) => {
 const CreateEmployee: FC = () => {
   const [selectedShops, setSelectedShop] = useState<Handbook | null>();
   const [selectedEmployee, setSelectedEmployee] = useState<Handbook | null>();
+
+  const [isPositionEditable, setIsPositionEditable] = useToggle();
 
   const form = useForm<EmployeeFormValues>({
     mode: 'controlled',
@@ -100,16 +103,31 @@ const CreateEmployee: FC = () => {
           </div>
         </Grid.Col>
         <Grid.Col>
-          <SelectAsync
-            placeholder="Выберите должность"
-            className="mt-2 w-full flex-7/12"
-            options={employeeFilterOptions.positionOptions}
-            value={selectedEmployee || null}
-            onChange={payload => {
-              setSelectedEmployee(payload);
-              form.setFieldValue('position', payload?.label || '');
-            }}
-          />
+          <div className="mt-2 flex items-center gap-3">
+            {isPositionEditable ? (
+              <TextInput
+                className="w-full flex-9/12"
+                placeholder="Введите должность"
+                onChange={e => form.setFieldValue('position', e.currentTarget.value)}
+              />
+            ) : (
+              <SelectAsync
+                placeholder="Выберите должность"
+                className="w-full flex-7/12"
+                options={employeeFilterOptions.positionOptions}
+                value={selectedEmployee || null}
+                onChange={payload => {
+                  setSelectedEmployee(payload);
+                  form.setFieldValue('position', payload?.label || '');
+                }}
+              />
+            )}
+
+            <Button onClick={() => setIsPositionEditable()} fz={12} px={7}>
+              {isPositionEditable ? 'Выбрать' : 'Добавить'}
+            </Button>
+          </div>
+
           <SelectAsync
             placeholder="Магазин"
             className="w-full mt-5 flex-7/12"
