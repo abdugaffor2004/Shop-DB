@@ -1,3 +1,5 @@
+import { Location } from '@/app/search/location/types/location';
+
 export interface ShopFormValues {
   name: string;
   city: string;
@@ -10,4 +12,6 @@ export interface ShopFormValues {
   suppliers: { id: string }[];
   employees: { id: string }[];
   warehouses: { id: string }[];
+
+  location: Omit<Location, 'id'>;
 }

@@ -79,11 +79,19 @@ export const POST = async (request: NextRequest) => {
       launchedDate,
       closedDate,
       areaValue: requestData.areaValue,
-      locationId: requestData.locationId ?? null,
       stocks: { connect: requestData.stocks },
       employees: { connect: requestData.employees },
       suppliers: { connect: requestData.suppliers },
       warehouses: { connect: requestData.warehouses },
+      location: requestData.locationId
+        ? { connect: { id: requestData.locationId } }
+        : {
+            create: {
+              region: requestData.location.region,
+              climate: requestData.location.climate,
+              populationCount: requestData.location.populationCount,
+            },
+          },
     },
   });
 

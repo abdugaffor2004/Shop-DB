@@ -1,16 +1,14 @@
 'use client';
 import { SelectAsync } from '@/app/components/SelectAsync';
 import { Button, Flex, Grid, Group, NumberInput, TextInput } from '@mantine/core';
-
 import { IconPlus } from '@tabler/icons-react';
 import React, { FC, useState } from 'react';
-
 import axios from 'axios';
 import { ShopFormValues } from './types/ShopFormValue';
 import { Handbook } from '@/app/types/Handbook';
-import { isNotEmpty, useForm } from '@mantine/form';
+import { useForm } from '@mantine/form';
 import { useEmployeesFilterQuery } from '@/app/search/employees/useEmployeesFilterQuery';
-import { useListState } from '@mantine/hooks';
+import { useListState, useToggle } from '@mantine/hooks';
 import { MultiSelectAsync } from '@/app/components/MultiSelectAsync';
 import { useSupplierFilterQuery } from '@/app/search/suppliers/useSupplierFilterQuery';
 import { useLocationFilterQuery } from '@/app/search/location/useLocationFIlterQuery';
@@ -32,6 +30,8 @@ const CreateShop: FC = () => {
   const [selectedSuppliers, suppliersHandlers] = useListState<Handbook>([]);
   const [selectedWarehouses, warehousesHandlers] = useListState<Handbook>([]);
 
+  const [isLocationEditable, setIsLocationEditable] = useToggle();
+
   const form = useForm<ShopFormValues>({
     mode: 'controlled',
     initialValues: {
@@ -46,8 +46,14 @@ const CreateShop: FC = () => {
       stocks: [],
       suppliers: [],
       warehouses: [],
+
+      location: {
+        region: '',
+        climate: '',
+        populationCount: 0,
+        shops: [],
+      },
     },
-    validate: { locationId: isNotEmpty() },
   });
 
   const handleSubmit = (formValues: ShopFormValues) => {
@@ -132,16 +138,30 @@ const CreateShop: FC = () => {
             {...form.getInputProps('areaValue')}
           />
 
-          <SelectAsync
-            placeholder="Местоположение"
-            className="mt-5 w-full flex-7/12"
-            options={locationFilterOptions.regionOptions}
-            value={selectedLocation || null}
-            onChange={payload => {
-              setSelectedLocation(payload);
-              form.setFieldValue('locationId', payload?.value || null);
-            }}
-          />
+          <div className="mt-5 flex items-center gap-3">
+            {isLocationEditable ? (
+              <TextInput
+                className="w-full flex-9/12"
+                placeholder="Введите область"
+                onChange={e => form.setFieldValue('location.region', e.currentTarget.value)}
+              />
+            ) : (
+              <SelectAsync
+                placeholder="Область"
+                className="w-full flex-9/12"
+                options={locationFilterOptions.regionOptions}
+                value={selectedLocation || null}
+                onChange={payload => {
+                  setSelectedLocation(payload);
+                  form.setFieldValue('locationId', payload?.value || null);
+                }}
+              />
+            )}
+
+            <Button onClick={() => setIsLocationEditable()} fz={12} px={7}>
+              {isLocationEditable ? 'Выбрать' : 'Добавить'}
+            </Button>
+          </div>
         </Grid.Col>
         <Grid.Col>
           <MultiSelectAsync
